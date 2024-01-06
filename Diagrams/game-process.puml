@@ -1,4 +1,5 @@
 ﻿@startuml
+'https://plantuml.com/ru/sequence-diagram
 
 Player -> Game : NextMove
 Game -> Field : GetWinner

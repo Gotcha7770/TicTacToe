@@ -1,4 +1,5 @@
 ﻿@startuml
+'https://plantuml.com/ru/class-diagram
 
 enum Symbol {
     X

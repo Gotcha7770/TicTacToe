@@ -10,8 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagrams", "Diagrams", "{F292CC0F-F44F-41EA-8EFD-A79AA8D86EA4}"
 	ProjectSection(SolutionItems) = preProject
-		Diagrams\gameProcess.puml = Diagrams\gameProcess.puml
 		Diagrams\design.puml = Diagrams\design.puml
+		Diagrams\game-process.puml = Diagrams\game-process.puml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe.Core", "TicTacToe.Core\TicTacToe.Core.csproj", "{754C35AD-DA7A-4B59-AAC2-0667396C01A8}"
