@@ -1,0 +1,54 @@
+﻿@startuml
+
+enum Symbol {
+    X
+    O
+}
+
+class Cell {
+    int row
+    int coll
+}
+
+class Move {
+    Cell cell
+    Symbol symbol
+}
+
+class Field {
+    Cell[] cell
+    Apply(move)
+    IEnumerable<Cell> GetEmptyCells()
+    IPLayer GetWinner()
+}
+
+interface IPlayer {
+    Symbol symbol
+    Move(game)
+}
+
+class Player {
+}
+
+class AIPlayer {
+}
+
+' раунд игры, счет?
+
+class Game {
+    Field field
+    IPlayer firstPlayer
+    IPlayer secondPlayer
+    IPlayer currentPlayer
+}
+
+Move --> Symbol
+Move --> Cell
+Field --o Cell
+Player ..|> IPlayer
+AIPlayer ..|> IPlayer
+IPlayer --> Move
+Game ..> Field
+Game --> IPlayer
+
+@enduml

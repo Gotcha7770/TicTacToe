@@ -1,0 +1,23 @@
+﻿@startuml
+
+Player -> Game : NextMove
+Game -> Field : GetWinner
+
+alt winner exists
+
+    Field -> Game: Winner
+    Game -> Player : GameOver
+
+else if no winner
+    
+    Game -> Field : IsDraw
+    alt is draw
+        Game -> Player : GameOver
+    else if no draw
+        Game -> Game : SwitchPlayer
+        Player -> Game : NextMove
+    end
+    
+end
+ 
+@enduml
