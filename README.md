@@ -1,6 +1,6 @@
 This is a playground for testing various UI frameworks and patterns using a simple example.
 
-As reference it will be used tic tac toe [game from google][1]
+As reference it will be used [tic tac toe game from google][1]
 
 ## TicTacToe Domain
 
