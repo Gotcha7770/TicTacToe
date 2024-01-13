@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using TicTacToe.Core.Tests.TestCases;
 using TicTacToe.Models;
 
 namespace TicTacToe.Core.Tests;

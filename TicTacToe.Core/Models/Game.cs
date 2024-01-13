@@ -1,6 +1,6 @@
-﻿using TicTacToe.Models;
+﻿using TicTacToe.Interfaces;
 
-namespace TicTacToe.Core.Tests;
+namespace TicTacToe.Models;
 
 public class Game
 {

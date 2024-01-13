@@ -1,6 +1,6 @@
 ﻿using TicTacToe.Models;
 
-namespace TicTacToe.Core.Tests;
+namespace TicTacToe.Interfaces;
 
 public interface IPlayer
 {

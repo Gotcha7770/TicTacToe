@@ -1,7 +1,6 @@
 ﻿using TicTacToe.Models;
-using static TicTacToe.Models.Symbol;
 
-namespace TicTacToe.Core.Tests;
+namespace TicTacToe.Core.Tests.TestCases;
 
 public class GetWinnerTestCases : TheoryData<Field, Symbol?>
 {
