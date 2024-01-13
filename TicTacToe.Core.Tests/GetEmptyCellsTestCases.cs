@@ -3,11 +3,11 @@ using static TicTacToe.Models.Symbol;
 
 namespace TicTacToe.Core.Tests;
 
-public class GetEmptyTestCases : TheoryData<Field, Cell[]>
+public class GetEmptyCellsTestCases : TheoryData<Field, Cell[]>
 {
     private static readonly Symbol? _ = null;
 
-    public GetEmptyTestCases()
+    public GetEmptyCellsTestCases()
     {
         Add(new Field(new[,]
         {
