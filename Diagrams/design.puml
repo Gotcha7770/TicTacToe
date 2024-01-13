@@ -17,10 +17,10 @@ class Move {
 }
 
 class Field {
-    Cell[] cell
+    Symbol?[] symbols
     Apply(move)
     IEnumerable<Cell> GetEmptyCells()
-    IPLayer GetWinner()
+    Symbol? GetWinner()
 }
 
 interface IPlayer {
@@ -38,14 +38,15 @@ class AIPlayer {
 
 class Game {
     Field field
-    IPlayer firstPlayer
-    IPlayer secondPlayer
+    IPlayer XPlayer
+    IPlayer OPlayer
     IPlayer currentPlayer
 }
 
 Move --> Symbol
 Move --> Cell
-Field --o Cell
+Field --o Symbol
+Field ..> Move
 Player ..|> IPlayer
 AIPlayer ..|> IPlayer
 IPlayer --> Move

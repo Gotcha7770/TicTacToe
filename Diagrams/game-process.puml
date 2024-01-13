@@ -2,19 +2,20 @@
 'https://plantuml.com/ru/sequence-diagram
 
 Player -> Game : NextMove
+Game -> Field : ApplyMove
 Game -> Field : GetWinner
 
 alt winner exists
 
-    Field -> Game: Winner
-    Game -> Player : GameOver
+    Field --> Game: Winner
+    Game --> Player : GameOver
 
 else if no winner
     
-    Game -> Field : IsDraw
-    alt is draw
-        Game -> Player : GameOver
-    else if no draw
+    Game -> Field : GetEmptyCells
+    alt no empty cells
+        Game --> Player : GameOver
+    else has empty cells
         Game -> Game : SwitchPlayer
         Player -> Game : NextMove
     end
