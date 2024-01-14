@@ -7,20 +7,20 @@ enum Symbol {
 }
 
 class Cell {
-    int row
-    int coll
+    int Row
+    int Column
 }
 
 class Move {
-    Cell cell
-    Symbol symbol
+    Cell Cell
+    Symbol Symbol
 }
 
 class Field {
-    Symbol?[] symbols
-    Apply(move)
-    IEnumerable<Cell> GetEmptyCells()
-    Symbol? GetWinner()
+    - Symbol?[] _symbols
+    + Apply(move)
+    + IEnumerable<Cell> GetEmptyCells()
+    + Symbol? GetWinner()
 }
 
 interface IPlayer {
@@ -37,15 +37,15 @@ class AIPlayer {
 ' раунд игры, счет?
 
 class Game {
-    Field field
-    IPlayer XPlayer
-    IPlayer OPlayer
-    IPlayer currentPlayer
+    - Field field
+    - IPlayer xPlayer
+    - IPlayer oPlayer
+    + IPlayer CurrentPlayer
 }
 
 Move --> Symbol
 Move --> Cell
-Field --o Symbol
+Field o-- Symbol
 Field ..> Move
 Player ..|> IPlayer
 AIPlayer ..|> IPlayer
