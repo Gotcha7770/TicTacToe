@@ -1,5 +1,8 @@
-﻿namespace TicTacToe.Models;
+﻿using System.Diagnostics;
 
+namespace TicTacToe.Models;
+
+[DebuggerTypeProxy(typeof(FieldDebugView))]
 public class Field
 {
     private readonly Symbol?[,] _symbols;
@@ -55,15 +58,6 @@ public class Field
         yield return GetRightDiagonal();
     }
 
-    public override string ToString()
-    {
-        return $"""
-                {_symbols[0, 0]}|{_symbols[0, 1]}|{_symbols[0, 2]}
-                {_symbols[1, 0]}|{_symbols[1, 1]}|{_symbols[1, 2]}
-                {_symbols[2, 0]}|{_symbols[2, 1]}|{_symbols[2, 2]}
-                """;
-    }
-
     private IEnumerable<IEnumerable<Symbol?>> GetRows()
     {
         for (byte i = 0; i < 3; i++)
@@ -88,5 +82,29 @@ public class Field
     private IEnumerable<Symbol?> GetRightDiagonal()
     {
         return new[] { _symbols[2, 0], _symbols[1, 1], _symbols[0, 2] };
+    }
+    
+    internal class FieldDebugView
+    {
+        private readonly Field _field;
+
+        public FieldDebugView(Field field)
+        {
+            _field = field;
+        }
+
+        public string View => string.Concat(_field.GetRows().Select(GetString));
+
+        private string GetString(IEnumerable<Symbol?> symbols)
+        {
+            return string.Concat(symbols.Select(GetString)) + Environment.NewLine;
+        }
+
+        private string GetString(Symbol? symbol) => symbol switch
+        {
+            Symbol.X => "❌",
+            Symbol.O => "⭕",
+            _ => "⬛"
+        };
     }
 }
