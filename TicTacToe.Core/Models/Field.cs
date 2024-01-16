@@ -32,14 +32,14 @@ public class Field
     {
         foreach (var symbol in Enum.GetValues<Symbol>())
         {
-            if(GetAllLines().Any(x => x.All(s => s == symbol)))
+            if(GetAllLines().Any(x => x.IsAllSymbolsAre(symbol)))
                 return symbol;
         }
 
         return null;
     }
 
-    private IEnumerable<IEnumerable<Symbol?>> GetAllLines()
+    public IEnumerable<IEnumerable<Symbol?>> GetAllLines()
     {
         foreach (var row in GetRows())
         {
@@ -54,7 +54,16 @@ public class Field
         yield return GetLeftDiagonal();
         yield return GetRightDiagonal();
     }
-    
+
+    public override string ToString()
+    {
+        return $"""
+                {_symbols[0, 0]}|{_symbols[0, 1]}|{_symbols[0, 2]}
+                {_symbols[1, 0]}|{_symbols[1, 1]}|{_symbols[1, 2]}
+                {_symbols[2, 0]}|{_symbols[2, 1]}|{_symbols[2, 2]}
+                """;
+    }
+
     private IEnumerable<IEnumerable<Symbol?>> GetRows()
     {
         for (byte i = 0; i < 3; i++)

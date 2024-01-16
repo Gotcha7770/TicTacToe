@@ -27,7 +27,7 @@ public class GetWinnerTestCases : TheoryData<Field, Symbol?>
             {O, X, O}
         }), null);
 
-        foreach (Symbol symbol in Enum.GetValues<Symbol>())
+        foreach (var symbol in Enum.GetValues<Symbol>())
         {
             for (int i = 0; i < 3; i++)
             {
