@@ -2,6 +2,7 @@
 
 namespace TicTacToe.Avalonia.ViewModels;
 
-public class ViewModelBase : ReactiveObject
+public class GameViewModel : ReactiveObject
 {
+    
 }

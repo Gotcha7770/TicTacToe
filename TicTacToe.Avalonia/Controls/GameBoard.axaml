@@ -1,0 +1,40 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:TicTacToe.Avalonia.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="TicTacToe.Avalonia.Controls.GameBoard">
+    <UserControl.Styles>
+        <Style Selector="Border.gridBorder">
+            <Setter Property="Background" Value="{DynamicResource SecondaryBrush}" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto, 6, Auto, 6, Auto" Background="{DynamicResource PrimaryBrush}">
+        <Grid ColumnDefinitions="Auto, 6, Auto, 6, Auto">
+            <controls:Cell />
+            <Border Grid.Column="1" Classes="gridBorder" />
+            <controls:Cell Grid.Column="2" />
+            <Border Grid.Column="3" Classes="gridBorder" />
+            <controls:Cell Grid.Column="4" />
+        </Grid>
+        <Border Grid.Row="1" Classes="gridBorder" />
+        <Grid Grid.Row="2" ColumnDefinitions="Auto, 6, Auto, 6, Auto">
+            <controls:Cell />
+            <Border Grid.Column="1" Classes="gridBorder" />
+            <controls:Cell Grid.Column="2" />
+            <Border Grid.Column="3" Classes="gridBorder" />
+            <controls:Cell Grid.Column="4" />
+        </Grid>
+        <Border Grid.Row="3" Classes="gridBorder" />
+        <Grid Grid.Row="4" ColumnDefinitions="Auto, 6, Auto, 6, Auto">
+            <controls:Cell />
+            <Border Grid.Column="1" Classes="gridBorder" />
+            <controls:Cell Grid.Column="2" />
+            <Border Grid.Column="3" Classes="gridBorder" />
+            <controls:Cell Grid.Column="4" />
+        </Grid>
+    </Grid>
+
+</UserControl>

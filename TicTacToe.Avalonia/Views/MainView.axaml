@@ -3,14 +3,91 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:TicTacToe.Avalonia.ViewModels"
+             xmlns:controls="clr-namespace:TicTacToe.Avalonia.Controls"
+             xmlns:models="clr-namespace:TicTacToe.Models;assembly=TicTacToe.Core"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="TicTacToe.Avalonia.Views.MainView"
              x:DataType="vm:MainViewModel">
   <Design.DataContext>
-    <!-- This only sets the DataContext for the previewer in an IDE,
-         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
     <vm:MainViewModel />
   </Design.DataContext>
 
-  <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+  <UserControl.Styles>
+        <Style Selector="Button.main">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
+            <Setter Property="Padding" Value="24, 7" />
+        </Style>
+        <Style Selector="Button.main.player">
+            <Setter Property="Padding" Value="4, 2"/>
+            <Setter Property="Width" Value="200"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+          Width="650"
+          VerticalAlignment="Center">
+        <ComboBox ItemsSource="{Binding GameModes}"
+                  SelectedItem="{Binding SelectedGameMode}"/>
+        <Grid Grid.Row="1" ColumnDefinitions="*, *">
+            <Button Classes="main player"
+                    HorizontalAlignment="Right"
+                    Command="{Binding SetPlayerCommand}"
+                    CommandParameter="{x:Static models:Symbol.X}">
+                <Grid ColumnDefinitions="*, *" Margin="24, 3">
+                    <Path Width="16"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Center"
+                          Stretch="Uniform"
+                          StrokeThickness="3"
+                          Stroke="White" 
+                          Data="{DynamicResource CrossIcon}"/>
+                    <TextBlock Grid.Column="1"
+                               HorizontalAlignment="Right"
+                               FontSize="24"
+                               Text="-"/>
+                </Grid>
+            </Button>
+            <Button Grid.Column="1"
+                    Classes="main player"
+                    HorizontalAlignment="Left"
+                    Command="{Binding SetPlayerCommand}"
+                    CommandParameter="{x:Static models:Symbol.O}">
+                <Grid ColumnDefinitions="*, *" Margin="24, 3">
+                    <Path 
+                        Width="16"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Stretch="Uniform"
+                        StrokeThickness="3"
+                        Stroke="White" 
+                        Data="{DynamicResource NoughtIcon}"/>
+                    <TextBlock Grid.Column="1"
+                               HorizontalAlignment="Right"
+                               FontSize="24"
+                               Text="-"/>
+                </Grid>
+            </Button>
+        </Grid>
+        <TextBlock Grid.Row="2"
+                   Margin="12"
+                   HorizontalAlignment="Center"
+                   Foreground="{DynamicResource PrimaryBrush}"
+                   FontSize="12"
+                   Text="Начните игру или выберите игрока" />
+        <Border Grid.Row="3"
+                HorizontalAlignment="Stretch"
+                Padding="10"
+                Background="{DynamicResource PrimaryBrush}">
+            <controls:GameBoard HorizontalAlignment="Center"
+                                DataContext="{Binding GameViewModel}"/>
+        </Border>
+        <Button Grid.Row="4"
+                Classes="main"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                FontWeight="Bold"
+                Command="{Binding RestartCommand}"
+                Content="Начать заново" />
+    </Grid>
 </UserControl>

@@ -3,13 +3,30 @@
              xmlns:local="using:TicTacToe.Avalonia"
              x:Class="TicTacToe.Avalonia.App"
              RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <local:ViewLocator />
     </Application.DataTemplates>
 
     <Application.Styles>
         <FluentTheme />
     </Application.Styles>
+
+    <Application.Resources>
+        <Color x:Key="PrimaryColor">#14bdac</Color>
+        <Color x:Key="SecondaryColor">#0da192</Color>
+        <Color x:Key="GreyColor">#9aa0a6</Color>
+
+        <SolidColorBrush x:Key="PrimaryBrush" Color="{DynamicResource PrimaryColor}" />
+        <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource SecondaryColor}" />
+        <SolidColorBrush x:Key="GreyBrush" Color="{DynamicResource GreyColor}" />
+
+        <GeometryGroup x:Key="CrossIcon">
+            <Geometry>M 16 16 L 112 112</Geometry>
+            <Geometry>M 112 16 L 16 112</Geometry>
+        </GeometryGroup>
+
+        <Geometry x:Key="NoughtIcon">M 64 16 A 48 48 0 1 0 64 112 A 48 48 0 1 0 64 16</Geometry>
+    </Application.Resources>
 </Application>
