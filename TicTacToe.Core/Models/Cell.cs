@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace TicTacToe.Models;
+﻿namespace TicTacToe.Models;
 
 public record Cell
 {
