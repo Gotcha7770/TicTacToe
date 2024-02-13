@@ -1,0 +1,21 @@
+﻿@startuml
+'https://plantuml.com/state-diagram
+
+scale 550 width
+hide empty description
+[*] --> Start
+
+Start --> Start : SelectLevel
+Start --> Start : Restart
+Start --> Game : SelectPlayer
+Start --> Game : Move
+Start --> [*]
+
+Game --> Start : SelectLevel
+Game --> Start : Restart
+Game --> End : EndGame
+Game --> Game : Move
+Game --> [*]
+
+End --> [*]
+@enduml
