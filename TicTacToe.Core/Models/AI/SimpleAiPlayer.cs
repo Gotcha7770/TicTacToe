@@ -1,6 +1,6 @@
 ﻿namespace TicTacToe.Models.AI;
 
-public static class SimpleAiPlayer
+internal static class SimpleAiPlayer
 {
     private static readonly Random Random = new Random();
 
