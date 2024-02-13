@@ -20,27 +20,32 @@ class Field {
     - Symbol?[] _symbols
     + Apply(move)
     + IEnumerable<Cell> GetEmptyCells()
-    + Symbol? GetWinner()
+    + IEnumerable<IEnumerable<Symbol?>> GetAllLines()
 }
 
 interface IPlayer {
     Symbol symbol
-    Move(game)
+    Move(field)
 }
 
-class Player {
+abstract class Player {
 }
 
-class AIPlayer {
+class OPlayer {
 }
 
-' раунд игры, счет?
+class XPlayer {
+}
 
 class Game {
     - Field field
-    - IPlayer xPlayer
-    - IPlayer oPlayer
+    - XPlayer xPlayer
+    - OPlayer oPlayer
+    + GameState State
     + IPlayer CurrentPlayer
+     + Move NextMove()
+        - Symbol GetWinner()
+        - bool IsDraw()
 }
 
 Move --> Symbol
@@ -48,7 +53,8 @@ Move --> Cell
 Field o-- Symbol
 Field ..> Move
 Player ..|> IPlayer
-AIPlayer ..|> IPlayer
+XPlayer ..|> Player
+OPlayer ..|> Player
 IPlayer --> Move
 Game ..> Field
 Game --> IPlayer
