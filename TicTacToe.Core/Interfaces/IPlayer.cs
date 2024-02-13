@@ -6,5 +6,5 @@ public interface IPlayer
 {
     Symbol Symbol { get; }
 
-    void Move(Field field);
+    Task<Move> GetNextMove(Field field);
 }
