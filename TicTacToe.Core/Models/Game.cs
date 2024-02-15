@@ -24,15 +24,16 @@ public class Game
         CurrentPlayer = _xPlayer;
     }
 
-    public GameState State { get; private set; }
+    public Move LastMove { get; private set; }
     public IPlayer CurrentPlayer { get; private set; }
+    public GameState State { get; private set; }
 
     public async Task<bool> NextMove()
     {
         if (State is GameState.InProgress)
         {
-            var move = await CurrentPlayer.GetNextMove(_field);
-            _field.Apply(move);
+            LastMove = await CurrentPlayer.GetNextMove(_field);
+            _field.Apply(LastMove);
 
             if (IsDraw())
             {
