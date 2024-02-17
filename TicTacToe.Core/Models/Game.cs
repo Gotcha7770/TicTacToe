@@ -15,11 +15,11 @@ public class Game
     private readonly XPlayer _xPlayer;
     private readonly OPlayer _oPlayer;
 
-    public Game(XPlayer one, OPlayer other)
+    public Game(XPlayer xPlayer, OPlayer oPlayer)
     {
         _field = new Field();
-        _xPlayer = one;
-        _oPlayer = other;
+        _xPlayer = xPlayer;
+        _oPlayer = oPlayer;
 
         CurrentPlayer = _xPlayer;
     }
@@ -59,7 +59,7 @@ public class Game
 
     private void SwitchPlayer()
     {
-        CurrentPlayer = CurrentPlayer == _xPlayer ? _xPlayer : _oPlayer;
+        CurrentPlayer = CurrentPlayer == _xPlayer ? _oPlayer : _xPlayer;
     }
 
     private bool IsDraw() => _field.GetEmptyCells().IsEmpty();

@@ -13,7 +13,7 @@ public class GameTests
         var o = SimpleAiPlayer.FromO();
         var game = new Game(x, o);
 
-        while (await game.NextMove()) { }
+        while (await game.NextMove(CancellationToken.None)) { }
 
         game.State.Should()
             .BeOneOf(GameState.Draw, GameState.GameOver);
