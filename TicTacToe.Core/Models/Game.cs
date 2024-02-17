@@ -28,11 +28,14 @@ public class Game
     public IPlayer CurrentPlayer { get; private set; }
     public GameState State { get; private set; }
 
-    public async Task<bool> NextMove()
+    public async Task<bool> NextMove(CancellationToken cancellationToken)
     {
         if (State is GameState.InProgress)
         {
-            LastMove = await CurrentPlayer.GetNextMove(_field);
+            LastMove = await CurrentPlayer.GetNextMove(_field, cancellationToken);
+            if (cancellationToken.IsCancellationRequested)
+                return false;
+
             _field.Apply(LastMove);
 
             if (IsDraw())

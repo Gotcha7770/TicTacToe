@@ -12,7 +12,7 @@ public abstract class Player : IPlayer
         _moveStrategy = moveStrategy;
     }
 
-    public async Task<Move> GetNextMove(Field field)
+    public async Task<Move> GetNextMove(Field field, CancellationToken cancellationToken)
     {
         var nextCell = await _moveStrategy(field);
 
