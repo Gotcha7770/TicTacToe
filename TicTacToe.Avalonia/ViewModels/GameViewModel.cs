@@ -31,7 +31,7 @@ public class GameViewModel : ReactiveObject, IDisposable
         Size = size;
 
         _cells = new CellViewModel[size.Rows * size.Columns];
-        _subscription = CreateNew();
+        _subscription = CreateNewGame();
     }
 
     public IPlayer CurrentPlayer
@@ -46,12 +46,14 @@ public class GameViewModel : ReactiveObject, IDisposable
         set => this.RaiseAndSetIfChanged(ref _currentState, value);
     }
 
+    public void Restart() => CreateNewGame();
+
     public void Dispose() 
     {
         _subscription?.Dispose();
     }
 
-    private IDisposable CreateNew()
+    private IDisposable CreateNewGame()
     {
         _subscription?.Dispose();
         ResetCells();
