@@ -1,13 +1,13 @@
 ﻿namespace TicTacToe.Models.AI;
 
-internal static class SimpleAiPlayer
+public static class SimpleAiPlayer
 {
     private static readonly Random Random = new Random();
 
     public static XPlayer FromX() => new XPlayer(GetNextMove);
     public static OPlayer FromO() => new OPlayer(GetNextMove);
 
-    private static Task<Cell> GetNextMove(Field field)
+    private static Task<Cell> GetNextMove(Field field, Symbol symbol)
     {
         var variants = field.GetEmptyCells().ToArray();
         int randomIndex = Random.Next(variants.Length);

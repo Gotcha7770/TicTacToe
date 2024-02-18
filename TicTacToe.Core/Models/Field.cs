@@ -5,6 +5,7 @@ namespace TicTacToe.Models;
 [DebuggerTypeProxy(typeof(FieldDebugView))]
 public class Field
 {
+    //TODO: consider option
     private readonly Symbol?[,] _symbols;
 
     public Field() : this(new Symbol?[3,3]) { }
@@ -16,7 +17,7 @@ public class Field
 
     public void Apply(Move move)
     {
-        _symbols[move.Cell.Row, move.Cell.Column] = move.Symbol;
+        this[move.Cell] = move.Symbol;
     }
 
     public IEnumerable<Cell> GetEmptyCells()
@@ -56,6 +57,25 @@ public class Field
 
         yield return GetLeftDiagonal();
         yield return GetRightDiagonal();
+    }
+    
+    public T Scope<T>(Move move, Func<Field, T> selector)
+    {
+        try
+        {
+            this[move.Cell] = move.Symbol;
+            return selector(this);
+        }
+        finally
+        {
+            this[move.Cell] = null;
+        }
+    }
+
+    protected Symbol? this[Cell cell]
+    {
+        get => _symbols[cell.Row, cell.Column];
+        set => _symbols[cell.Row, cell.Column] = value;
     }
 
     private IEnumerable<IEnumerable<Symbol?>> GetRows()

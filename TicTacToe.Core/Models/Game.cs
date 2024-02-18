@@ -9,6 +9,7 @@ public enum GameState
     Draw
 }
 
+// https://www.xchen.tech/mywork/blog-post-one-g54cj-24mzx-czgpd
 public class Game
 {
     private readonly Field _field;
@@ -38,11 +39,11 @@ public class Game
 
             _field.Apply(LastMove);
 
-            if (IsDraw())
+            if (IsDraw(_field))
             {
                 State = GameState.Draw;
             }
-            else if (IsWinner(CurrentPlayer))
+            else if (IsWinner(_field, CurrentPlayer.Symbol))
             {
                 State = GameState.GameOver;
             }
@@ -57,12 +58,42 @@ public class Game
         return false;
     }
 
+    internal static IEnumerable<Move> GetAvailableMoves(Field field, Symbol symbol)
+    {
+        return field.GetEmptyCells().Select(x => new Move(x, symbol));
+    }
+
+    internal static bool IsDraw(Field field) => field.GetEmptyCells().IsEmpty();
+
+    internal static bool IsWinner(Field field, Symbol symbol) => field.GetAllLines().Any(x => x.IsAllSymbolsAre(symbol));
+    
+    internal static Symbol? GetWinner(Field field)
+    {
+        foreach (var line in field.GetAllLines())
+        {
+            foreach (var player in Enum.GetValues<Symbol>())
+            {
+                if (line.IsAllSymbolsAre(player))
+                    return player;
+            }
+        }
+
+        return null;
+    }
+
+    internal static int Score(Field field, Symbol symbol, byte depth)
+    {
+        var winner = GetWinner(field);
+        if (winner.HasValue)
+        {
+            return winner == symbol ? 10 - depth : depth - 10;
+        }
+
+        return 0;
+    }
+
     private void SwitchPlayer()
     {
         CurrentPlayer = CurrentPlayer == _xPlayer ? _oPlayer : _xPlayer;
     }
-
-    private bool IsDraw() => _field.GetEmptyCells().IsEmpty();
-
-    private bool IsWinner(IPlayer player) => _field.GetAllLines().Any(x => x.IsAllSymbolsAre(player.Symbol));
 }
