@@ -1,31 +1,47 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:TicTacToe.Avalonia.Controls"
-             mc:Ignorable="d" d:DesignWidth="204" d:DesignHeight="204"
-             x:Class="TicTacToe.Avalonia.Controls.GameBoard">
-    <UserControl.Styles>
-        <Style Selector="Border.gridBorder">
-            <Setter Property="Background" Value="{DynamicResource SecondaryBrush}" />
-        </Style>
-    </UserControl.Styles>
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:TicTacToe.Avalonia.Controls"
+        xmlns:viewModels="clr-namespace:TicTacToe.Avalonia.ViewModels">
+    <Design.PreviewWith>
+        <controls:GameBoard />
+    </Design.PreviewWith>
 
-    <!-- <Grid Background="{DynamicResource PrimaryBrush}"> -->
-       <!-- <UniformGrid x:Name="CellsContainer"  -->
-       <!--              Rows="{Binding $parent[controls:GameBoard].Size}" -->
-       <!--              Columns="{Binding $parent[controls:GameBoard].Size.Columns}"/> -->
-       <Grid x:Name="Decorator"
-             Height="240"
-             Width="240"
-             Background="Black"
-             RowDefinitions="*, 6, * 6 *"
-             ColumnDefinitions="*, 6, *, 6, *">
-           <Border Grid.Row="1" Grid.ColumnSpan="5" Classes="gridBorder"/>
-           <Border Grid.Row="3" Grid.ColumnSpan="5" Classes="gridBorder"/>
-           <Border Grid.RowSpan="5" Grid.Column="1" Classes="gridBorder"/>
-           <Border Grid.RowSpan="5" Grid.Column="3" Classes="gridBorder"/>
-       </Grid>
-    <!-- </Grid> -->
+    <Style Selector="controls|GameBoard">
+        <!-- Set Defaults -->
+        <Setter Property="Background" Value="{DynamicResource SystemControlBackgroundChromeWhiteBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SystemChromeGrayColor}" />
 
-</UserControl>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid Background="{TemplateBinding Background}">
+                    <ItemsControl ItemsSource="{TemplateBinding Cells}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Rows="{Binding Size.Rows, RelativeSource={RelativeSource TemplatedParent}}"
+                                             Columns="{Binding Size.Columns, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="viewModels:CellViewModel">
+                                <controls:Cell Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=controls:GameBoard}}"
+                                               Background="{Binding Background, RelativeSource={RelativeSource AncestorType=controls:GameBoard}}"
+                                               Symbol="{Binding Symbol}"
+                                               Command="{Binding PressedCommand}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Grid x:Name="Decorator"
+                          Height="204"
+                          Width="204"
+                          RowDefinitions="*, 6, * 6 *"
+                          ColumnDefinitions="*, 6, *, 6, *">
+                        <Border Grid.Row="1" Grid.ColumnSpan="5" Background="{TemplateBinding Foreground}"/>
+                        <Border Grid.Row="3" Grid.ColumnSpan="5" Background="{TemplateBinding Foreground}"/>
+                        <Border Grid.RowSpan="5" Grid.Column="1" Background="{TemplateBinding Foreground}"/>
+                        <Border Grid.RowSpan="5" Grid.Column="3" Background="{TemplateBinding Foreground}"/>
+                    </Grid>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

@@ -11,6 +11,8 @@
 
     <Application.Styles>
         <FluentTheme />
+        <StyleInclude Source="Controls/GameBoard.axaml"></StyleInclude>
+        <StyleInclude Source="Controls/Cell.axaml"></StyleInclude>
     </Application.Styles>
 
     <Application.Resources>

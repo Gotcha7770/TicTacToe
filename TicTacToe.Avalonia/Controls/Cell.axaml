@@ -1,10 +1,31 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="TicTacToe.Avalonia.Controls.Cell">
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:TicTacToe.Avalonia.Controls">
+    <Design.PreviewWith>
+        <controls:Cell />
+    </Design.PreviewWith>
 
-    <Button Width="48" Height="48" Padding="8"></Button>
+    <Style Selector="controls|Cell">
+        <!-- Set Defaults -->
+        <Setter Property="Background" Value="{DynamicResource SystemControlBackgroundChromeWhiteBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource SystemChromeGrayColor}" />
 
-</UserControl>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button Width="64" 
+                        Height="64" 
+                        Padding="14"
+                        Margin="3"
+                        CornerRadius="0"
+                        Background="{TemplateBinding Background}">
+                    <Path Data="{DynamicResource CrossIcon}" 
+                          Stroke="{TemplateBinding Foreground}" 
+                          StrokeDashArray="301.635"
+                          StrokeDashOffset="0"
+                          StrokeThickness="6"
+                          Stretch="UniformToFill"/>
+                </Button>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
