@@ -59,6 +59,7 @@ public class Field
         yield return GetRightDiagonal();
     }
     
+    //TODO: naming?
     public T Scope<T>(Move move, Func<Field, T> selector)
     {
         try

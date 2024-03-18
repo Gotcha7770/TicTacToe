@@ -7,7 +7,7 @@ public static class SimpleAiPlayer
     public static XPlayer FromX() => new XPlayer(GetNextMove);
     public static OPlayer FromO() => new OPlayer(GetNextMove);
 
-    private static Task<Cell> GetNextMove(Field field, Symbol symbol)
+    private static Task<Cell> GetNextMove(Field field)
     {
         var variants = field.GetEmptyCells().ToArray();
         int randomIndex = Random.Next(variants.Length);

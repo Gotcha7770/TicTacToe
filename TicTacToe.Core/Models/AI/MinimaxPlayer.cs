@@ -4,8 +4,8 @@
 // https://thecode.media/tic-tac-toe/
 public static class MinimaxPlayer
 {
-    public static XPlayer FromX() => new XPlayer(GetNextMove);
-    public static OPlayer FromO() => new OPlayer(GetNextMove);
+    public static XPlayer FromX() => new XPlayer(f => GetNextMove(f, Symbol.X));
+    public static OPlayer FromO() => new OPlayer(f => GetNextMove(f, Symbol.O));
 
     private static Task<Cell> GetNextMove(Field field, Symbol symbol)
     {
