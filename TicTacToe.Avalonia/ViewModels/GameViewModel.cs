@@ -20,8 +20,8 @@ public class GameViewModel : ReactiveObject, IDisposable
     private IDisposable _subscription;
     private GameState _currentState;
     private IPlayer _currentPlayer;
+    private BoardSize _size;
 
-    public BoardSize Size { get; }
     public IReadOnlyCollection<CellViewModel> Cells => _cells;
 
     public GameViewModel(XPlayer xPlayer, OPlayer oPlayer, BoardSize size)
@@ -31,7 +31,17 @@ public class GameViewModel : ReactiveObject, IDisposable
         Size = size;
 
         _cells = new CellViewModel[size.Rows * size.Columns];
+        for (int i = 0; i < _cells.Length; i++)
+        {
+            _cells[i] = new CellViewModel();
+        }
         _subscription = CreateNewGame();
+    }
+
+    public BoardSize Size
+    {
+        get => _size;
+        set => this.RaiseAndSetIfChanged(ref _size, value);
     }
 
     public IPlayer CurrentPlayer
@@ -46,7 +56,7 @@ public class GameViewModel : ReactiveObject, IDisposable
         set => this.RaiseAndSetIfChanged(ref _currentState, value);
     }
 
-    public void Restart() => CreateNewGame();
+    public void Restart() => _subscription = CreateNewGame();
 
     public void Dispose() 
     {

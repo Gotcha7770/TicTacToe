@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:TicTacToe.Avalonia.Controls"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="204" d:DesignHeight="204"
              x:Class="TicTacToe.Avalonia.Controls.GameBoard">
     <UserControl.Styles>
         <Style Selector="Border.gridBorder">
@@ -11,30 +11,21 @@
         </Style>
     </UserControl.Styles>
 
-    <Grid RowDefinitions="Auto, 6, Auto, 6, Auto" Background="{DynamicResource PrimaryBrush}">
-        <Grid ColumnDefinitions="Auto, 6, Auto, 6, Auto">
-            <controls:Cell />
-            <Border Grid.Column="1" Classes="gridBorder" />
-            <controls:Cell Grid.Column="2" />
-            <Border Grid.Column="3" Classes="gridBorder" />
-            <controls:Cell Grid.Column="4" />
-        </Grid>
-        <Border Grid.Row="1" Classes="gridBorder" />
-        <Grid Grid.Row="2" ColumnDefinitions="Auto, 6, Auto, 6, Auto">
-            <controls:Cell />
-            <Border Grid.Column="1" Classes="gridBorder" />
-            <controls:Cell Grid.Column="2" />
-            <Border Grid.Column="3" Classes="gridBorder" />
-            <controls:Cell Grid.Column="4" />
-        </Grid>
-        <Border Grid.Row="3" Classes="gridBorder" />
-        <Grid Grid.Row="4" ColumnDefinitions="Auto, 6, Auto, 6, Auto">
-            <controls:Cell />
-            <Border Grid.Column="1" Classes="gridBorder" />
-            <controls:Cell Grid.Column="2" />
-            <Border Grid.Column="3" Classes="gridBorder" />
-            <controls:Cell Grid.Column="4" />
-        </Grid>
-    </Grid>
+    <!-- <Grid Background="{DynamicResource PrimaryBrush}"> -->
+       <!-- <UniformGrid x:Name="CellsContainer"  -->
+       <!--              Rows="{Binding $parent[controls:GameBoard].Size}" -->
+       <!--              Columns="{Binding $parent[controls:GameBoard].Size.Columns}"/> -->
+       <Grid x:Name="Decorator"
+             Height="240"
+             Width="240"
+             Background="Black"
+             RowDefinitions="*, 6, * 6 *"
+             ColumnDefinitions="*, 6, *, 6, *">
+           <Border Grid.Row="1" Grid.ColumnSpan="5" Classes="gridBorder"/>
+           <Border Grid.Row="3" Grid.ColumnSpan="5" Classes="gridBorder"/>
+           <Border Grid.RowSpan="5" Grid.Column="1" Classes="gridBorder"/>
+           <Border Grid.RowSpan="5" Grid.Column="3" Classes="gridBorder"/>
+       </Grid>
+    <!-- </Grid> -->
 
 </UserControl>
