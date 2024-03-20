@@ -21,6 +21,8 @@ public class GameViewModel : ReactiveObject, IDisposable
     private GameState _currentState;
     private IPlayer _currentPlayer;
     private BoardSize _size;
+    private int _xPlayerScore;
+    private int _oPlayerScore;
 
     public IReadOnlyCollection<CellViewModel> Cells => _cells;
 
@@ -34,7 +36,6 @@ public class GameViewModel : ReactiveObject, IDisposable
         for (int i = 0; i < _cells.Length; i++)
         {
             _cells[i] = new CellViewModel();
-            //_cells[i].Symbol = (i & 1) == 0 ? Symbol.X : Symbol.O;
         }
         _subscription = CreateNewGame();
     }
@@ -57,6 +58,18 @@ public class GameViewModel : ReactiveObject, IDisposable
         set => this.RaiseAndSetIfChanged(ref _currentState, value);
     }
 
+    public int XPlayerScore
+    {
+        get => _xPlayerScore;
+        set => this.RaiseAndSetIfChanged(ref _xPlayerScore, value);
+    }
+
+    public int OPlayerScore
+    {
+        get => _oPlayerScore;
+        set => this.RaiseAndSetIfChanged(ref _oPlayerScore, value);
+    }
+
     public void Restart() => _subscription = CreateNewGame();
 
     public void Dispose() 
@@ -72,7 +85,7 @@ public class GameViewModel : ReactiveObject, IDisposable
         var game = new Game(_xPlayer, _oPlayer);
         return game.ToObservable()
             .SubscribeOn(AvaloniaScheduler.Instance)
-            .Subscribe(x => ApplyMove(x, game), () => State = game.State);
+            .Subscribe(x => ApplyMove(x, game), () => Finish(game));
     }
 
     private void ResetCells()
@@ -85,6 +98,18 @@ public class GameViewModel : ReactiveObject, IDisposable
         var cell = _cells[ToIndex(move.Cell)];
         cell.Symbol = move.Symbol;
         CurrentPlayer = game.CurrentPlayer;
+    }
+    
+    private void Finish(Game game)
+    {
+        if (game.State is GameState.GameOver)
+        {
+            if (CurrentPlayer == _xPlayer)
+                XPlayerScore++;
+            else if (CurrentPlayer == _oPlayer)
+                OPlayerScore++;
+        }
+        State = game.State;
     }
 
     private int ToIndex(Cell cell) => cell.Row * Size.Columns + cell.Column;

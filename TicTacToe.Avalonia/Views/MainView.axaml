@@ -45,8 +45,9 @@
                           Data="{DynamicResource CrossIcon}"/>
                     <TextBlock Grid.Column="1"
                                HorizontalAlignment="Right"
+                               Foreground="{DynamicResource GreyBrush}"
                                FontSize="24"
-                               Text="-"/>
+                               Text="{Binding GameViewModel.XPlayerScore}"/>
                 </Grid>
             </Button>
             <Button Grid.Column="1"
@@ -65,8 +66,9 @@
                         Data="{DynamicResource NoughtIcon}"/>
                     <TextBlock Grid.Column="1"
                                HorizontalAlignment="Right"
+                               Foreground="{DynamicResource GreyBrush}"
                                FontSize="24"
-                               Text="-"/>
+                               Text="{Binding GameViewModel.OPlayerScore}"/>
                 </Grid>
             </Button>
         </Grid>
