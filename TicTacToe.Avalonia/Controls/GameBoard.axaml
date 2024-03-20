@@ -1,7 +1,8 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="using:TicTacToe.Avalonia.Controls"
-        xmlns:viewModels="clr-namespace:TicTacToe.Avalonia.ViewModels">
+        xmlns:viewModels="clr-namespace:TicTacToe.Avalonia.ViewModels"
+        xmlns:models="clr-namespace:TicTacToe.Models;assembly=TicTacToe.Core">
     <Design.PreviewWith>
         <controls:GameBoard />
     </Design.PreviewWith>
@@ -25,8 +26,25 @@
                             <DataTemplate DataType="viewModels:CellViewModel">
                                 <controls:Cell Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=controls:GameBoard}}"
                                                Background="{Binding Background, RelativeSource={RelativeSource AncestorType=controls:GameBoard}}"
-                                               Symbol="{Binding Symbol}"
-                                               Command="{Binding PressedCommand}"/>
+                                               Command="{Binding PressedCommand}">
+                                    <controls:Cell.Content>
+                                        <Path StrokeThickness="6"
+                                              Stretch="UniformToFill"
+                                              Classes.cross="{Binding Symbol, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:Symbol.X}}"
+                                              Classes.nought="{Binding Symbol, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:Symbol.O}}">
+                                            <Path.Styles>
+                                                <Style Selector="Path.cross">
+                                                    <Setter Property="Data" Value="{DynamicResource CrossIcon}" />
+                                                    <Setter Property="Stroke" Value="{DynamicResource DarkGreyColor}" />
+                                                </Style>
+                                                <Style Selector="Path.nought">
+                                                    <Setter Property="Data" Value="{DynamicResource NoughtIcon}" />
+                                                    <Setter Property="Stroke" Value="{DynamicResource WhiteColor}" />
+                                                </Style>
+                                            </Path.Styles>
+                                        </Path>
+                                    </controls:Cell.Content>
+                                </controls:Cell>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

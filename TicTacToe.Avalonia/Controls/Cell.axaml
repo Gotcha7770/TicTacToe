@@ -17,13 +17,8 @@
                         Padding="14"
                         Margin="3"
                         CornerRadius="0"
+                        Content="{TemplateBinding Content}"
                         Background="{TemplateBinding Background}">
-                    <Path Data="{DynamicResource CrossIcon}" 
-                          Stroke="{TemplateBinding Foreground}" 
-                          StrokeDashArray="301.635"
-                          StrokeDashOffset="0"
-                          StrokeThickness="6"
-                          Stretch="UniformToFill"/>
                 </Button>
             </ControlTemplate>
         </Setter>
