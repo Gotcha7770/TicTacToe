@@ -34,7 +34,7 @@ public class GameViewModel : ReactiveObject, IDisposable
         for (int i = 0; i < _cells.Length; i++)
         {
             _cells[i] = new CellViewModel();
-            _cells[i].Symbol = (i & 1) == 0 ? Symbol.X : Symbol.O;
+            //_cells[i].Symbol = (i & 1) == 0 ? Symbol.X : Symbol.O;
         }
         _subscription = CreateNewGame();
     }
