@@ -11,7 +11,7 @@ public class MinimaxPlayerTests
     [Fact]
     public async Task OneMoveToWin_PlayerDoThatMove()
     {
-        var player = MinimaxPlayer.FromX();
+        var player = new MinimaxPlayer(X);
         var field = new Field(new[,]
         {
             {O, _, X},
@@ -38,7 +38,7 @@ public class MinimaxPlayerTests
     [Fact]
     public async Task OneMoveToFork_PlayerDoThatMove()
     {
-        var player = MinimaxPlayer.FromX();
+        var player = new MinimaxPlayer(X);
         var field = new Field(new[,]
         {
             { X, O, _ }, 
@@ -56,7 +56,7 @@ public class MinimaxPlayerTests
     [Fact]
     public async Task OneMoveToLose_PlayerBreaksTheOpponentsLine()
     {
-        var player = MinimaxPlayer.FromX();
+        var player = new MinimaxPlayer(X);
         var field = new Field(new[,]
         {
             { X, _, _ }, // <- [0, 2]
@@ -72,7 +72,7 @@ public class MinimaxPlayerTests
     [Fact]
     public async Task AnyMoveToLoose()
     {
-        var player = MinimaxPlayer.FromO();
+        var player = new MinimaxPlayer(O);
         var field = new Field(new[,]
         {
             { X, O, _ }, 
@@ -103,7 +103,7 @@ public class MinimaxPlayerTests
     [Fact]
     public async Task ExampleFromTheArticle_PlayerBreaksTheOpponentsLine()
     {
-        var player = MinimaxPlayer.FromO();
+        var player = new MinimaxPlayer(O);
         var field = new Field(new[,]
         {
             { _, X, _ }, 

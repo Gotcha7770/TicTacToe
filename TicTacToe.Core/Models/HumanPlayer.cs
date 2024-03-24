@@ -1,12 +1,23 @@
-﻿using TicTacToe.Interfaces;
+﻿using System.Reactive.Linq;
+using TicTacToe.Interfaces;
 
 namespace TicTacToe.Models;
 
 public class HumanPlayer : IPlayer
 {
-    public Symbol Symbol { get; }
-    public Task<Move> GetNextMove(Field field, CancellationToken cancellationToken)
+    private readonly IObservable<Move> _moves;
+
+    public HumanPlayer(Symbol symbol, IObservable<Move> moves)
     {
-        throw new NotImplementedException();
+        _moves = moves;
+        Symbol = symbol;
+    }
+
+    public Symbol Symbol { get; }
+
+    public ValueTask<Move> GetNextMove(Field field, CancellationToken cancellationToken)
+    {
+        return _moves.Where(x => x.Symbol == Symbol)
+            .NextAsync(cancellationToken);
     }
 }

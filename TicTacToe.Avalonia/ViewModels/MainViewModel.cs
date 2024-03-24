@@ -57,7 +57,12 @@ public class MainViewModel : ReactiveObject
 
     private GameViewModel CreateGame(GameMode mode, Symbol selectedPlayer)
     {
-        var (x, o) = (SimpleAiPlayer.FromX(), SimpleAiPlayer.FromO());
-        return new GameViewModel(x, o, new BoardSize(3, 3));
+        return mode switch
+        {
+            GameMode.Easy => new GameViewModel(new SimpleAiPlayer(selectedPlayer.Reverse()), new BoardSize(3, 3)),
+            //GameMode.Medium => new GameViewModel(CreateOPlayer(mode), new BoardSize(3, 3)),
+            GameMode.Hard => new GameViewModel(new MinimaxPlayer(selectedPlayer.Reverse()), new BoardSize(3, 3)),
+            GameMode.HotSeat => new GameViewModel(new BoardSize(3, 3)),
+        };
     }
 }

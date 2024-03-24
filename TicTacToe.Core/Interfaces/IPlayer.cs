@@ -6,5 +6,5 @@ public interface IPlayer
 {
     Symbol Symbol { get; }
 
-    Task<Move> GetNextMove(Field field, CancellationToken cancellationToken = default);
+    ValueTask<Move> GetNextMove(Field field, CancellationToken cancellationToken = default);
 }

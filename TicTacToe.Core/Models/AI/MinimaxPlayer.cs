@@ -1,20 +1,26 @@
-﻿namespace TicTacToe.Models.AI;
+﻿using TicTacToe.Interfaces;
+
+namespace TicTacToe.Models.AI;
 
 // https://habr.com/ru/articles/329058/
 // https://thecode.media/tic-tac-toe/
-public static class MinimaxPlayer
+public class MinimaxPlayer : IPlayer
 {
-    public static XPlayer FromX() => new XPlayer(f => GetNextMove(f, Symbol.X));
-    public static OPlayer FromO() => new OPlayer(f => GetNextMove(f, Symbol.O));
+    public MinimaxPlayer(Symbol symbol)
+    {
+        Symbol = symbol;
+    }
 
-    private static Task<Cell> GetNextMove(Field field, Symbol symbol)
+    public Symbol Symbol { get; }
+
+    public ValueTask<Move> GetNextMove(Field field, CancellationToken cancellationToken = default)
     {
         var bestScore = int.MinValue;
         Move bestMove = null;
 
-        foreach (var move in field.GetEmptyCells().Select(x => new Move(x, symbol)))
+        foreach (var move in field.GetEmptyCells().Select(x => new Move(x, Symbol)))
         {
-            int score = field.Scope(move, f => MinimaxRecursive(f, symbol, isMaximizing: false));
+            int score = field.Scope(move, f => MinimaxRecursive(f, Symbol, isMaximizing: false));
             if (score > bestScore)
             {
                 bestScore = score;
@@ -22,7 +28,7 @@ public static class MinimaxPlayer
             }
         }
 
-        return Task.FromResult(bestMove.Cell);
+        return ValueTask.FromResult(bestMove);
     }
     
     private static int MinimaxRecursive(Field field, Symbol symbol, byte depth = 0, bool isMaximizing = true)

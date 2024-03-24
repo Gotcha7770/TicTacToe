@@ -1,20 +1,30 @@
-﻿namespace TicTacToe.Models.AI;
+﻿using TicTacToe.Interfaces;
 
-public static class SimpleAiPlayer
+namespace TicTacToe.Models.AI;
+
+public class SimpleAiPlayer : IPlayer
 {
     private static readonly Random Random = new Random();
     public static TimeSpan Timeout { get; set; } = TimeSpan.Zero;
 
-    public static XPlayer FromX() => new XPlayer(GetNextMove);
-    public static OPlayer FromO() => new OPlayer(GetNextMove);
-
-    private static async Task<Cell> GetNextMove(Field field)
+    public SimpleAiPlayer(Symbol symbol)
     {
-        await Task.Delay(Timeout);
+        Symbol = symbol;
+    }
+
+    public Symbol Symbol { get; }
+
+    public async ValueTask<Move> GetNextMove(Field field, CancellationToken cancellationToken = default)
+    {
+        await Task.Delay(Timeout, cancellationToken);
         var variants = field.GetEmptyCells().ToArray();
         int randomIndex = Random.Next(variants.Length);
         var randomCell = variants[randomIndex];
 
-        return randomCell;
+        return new Move(randomCell, Symbol);
     }
+
+    public static XPlayer FromX() => new SimpleAiPlayer(Symbol.X).AsXPlayer();
+
+    public static OPlayer FromO() => new SimpleAiPlayer(Symbol.O).AsOPlayer();
 }

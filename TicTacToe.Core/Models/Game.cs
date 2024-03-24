@@ -39,13 +39,13 @@ public class Game
 
             _field.Apply(LastMove);
 
-            if (IsDraw(_field))
-            {
-                State = GameState.Draw;
-            }
-            else if (IsWinner(_field, CurrentPlayer.Symbol))
+            if (IsWinner(_field, CurrentPlayer.Symbol))
             {
                 State = GameState.GameOver;
+            }
+            else if (IsDraw(_field))
+            {
+                State = GameState.Draw;
             }
             else
             {

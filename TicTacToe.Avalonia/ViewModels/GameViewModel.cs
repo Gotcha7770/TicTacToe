@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
@@ -26,18 +27,42 @@ public class GameViewModel : ReactiveObject, IDisposable
 
     public IReadOnlyCollection<CellViewModel> Cells => _cells;
 
-    public GameViewModel(XPlayer xPlayer, OPlayer oPlayer, BoardSize size)
+    public GameViewModel(BoardSize size)
     {
-        _xPlayer = xPlayer;
-        _oPlayer = oPlayer;
         Size = size;
-
         _cells = new CellViewModel[size.Rows * size.Columns];
-        for (int i = 0; i < _cells.Length; i++)
+        var userMove = InitializeCells(size);
+
+        _xPlayer = new HumanPlayer(Symbol.X, userMove).AsXPlayer();
+        _oPlayer = new HumanPlayer(Symbol.O, userMove).AsOPlayer();
+        
+        _subscription = new CompositeDisposable
         {
-            _cells[i] = new CellViewModel();
+            CreateNewGame()
+        };
+    }
+
+    public GameViewModel(IPlayer aiPlayer, BoardSize size)
+    {
+        Size = size;
+        _cells = new CellViewModel[size.Rows * size.Columns];
+        var userMove = InitializeCells(size);
+
+        if (aiPlayer.Symbol is Symbol.X)
+        {
+            _xPlayer = aiPlayer.AsXPlayer();
+            _oPlayer = new HumanPlayer(Symbol.O, userMove).AsOPlayer();
         }
-        _subscription = CreateNewGame();
+        else
+        {
+            _xPlayer = new HumanPlayer(Symbol.X, userMove).AsXPlayer();
+            _oPlayer = aiPlayer.AsOPlayer();
+        }
+        
+        _subscription = new CompositeDisposable
+        {
+            CreateNewGame()
+        };
     }
 
     public BoardSize Size
@@ -77,12 +102,27 @@ public class GameViewModel : ReactiveObject, IDisposable
         _subscription?.Dispose();
     }
 
+    private IObservable<Move> InitializeCells(BoardSize size)
+    {
+        for (byte i = 0; i < size.Rows; i++)
+        {
+            for (byte j = 0; j < size.Columns; j++)
+            {
+                _cells[i * size.Columns + j] = new CellViewModel(new Cell(i, j));
+            }
+        }
+        
+        return _cells.Select(x => x.Move).Merge();
+    }
+
     private IDisposable CreateNewGame()
     {
         _subscription?.Dispose();
         ResetCells();
 
         var game = new Game(_xPlayer, _oPlayer);
+        CurrentPlayer = game.CurrentPlayer;
+
         return game.ToObservable()
             .SubscribeOn(AvaloniaScheduler.Instance)
             .Subscribe(x => ApplyMove(x, game), () => Finish(game));

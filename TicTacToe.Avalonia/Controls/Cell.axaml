@@ -18,7 +18,9 @@
                         Margin="3"
                         CornerRadius="0"
                         Content="{TemplateBinding Content}"
-                        Background="{TemplateBinding Background}">
+                        Background="{TemplateBinding Background}"
+                        Command="{TemplateBinding Command}"
+                        CommandParameter="{TemplateBinding CommandParameter}">
                 </Button>
             </ControlTemplate>
         </Setter>

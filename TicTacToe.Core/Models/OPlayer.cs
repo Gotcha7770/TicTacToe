@@ -1,8 +1,23 @@
-﻿namespace TicTacToe.Models;
+﻿using TicTacToe.Interfaces;
 
-public class OPlayer : Player
+namespace TicTacToe.Models;
+
+public class OPlayer : IPlayer
 {
-    public OPlayer(Func<Field, Task<Cell>> moveStrategy) : base(moveStrategy) { }
+    private readonly IPlayer _player;
 
-    public override Symbol Symbol => Symbol.O;
+    public OPlayer(IPlayer player)
+    {
+        if (player.Symbol is not Symbol.O)
+            throw new ArgumentException(nameof(player.Symbol));
+
+        _player = player;
+    }
+
+    public Symbol Symbol => Symbol.O;
+
+    public ValueTask<Move> GetNextMove(Field field, CancellationToken cancellationToken = default)
+    {
+        return _player.GetNextMove(field, cancellationToken);
+    }
 }

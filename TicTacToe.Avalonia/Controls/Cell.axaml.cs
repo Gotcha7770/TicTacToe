@@ -21,4 +21,12 @@ public class Cell : TemplatedControl
         get => GetValue(CommandProperty);
         set => SetValue(CommandProperty, value);
     }
+
+    public static readonly StyledProperty<object> CommandParameterProperty = AvaloniaProperty.Register<Cell, object>("CommandParameter");
+
+    public object CommandParameter
+    {
+        get => GetValue(CommandParameterProperty);
+        set => SetValue(CommandParameterProperty, value);
+    }
 }
