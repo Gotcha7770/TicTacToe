@@ -21,6 +21,14 @@
                         Background="{TemplateBinding Background}"
                         Command="{TemplateBinding Command}"
                         CommandParameter="{TemplateBinding CommandParameter}">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                            <Setter Property="Background" Value="{TemplateBinding Background}"/>
+                        </Style>
+                        <Style Selector="Button:disabled /template/ ContentPresenter#PART_ContentPresenter">
+                            <Setter Property="Background" Value="{TemplateBinding Background}"/>
+                        </Style>
+                    </Button.Styles>
                 </Button>
             </ControlTemplate>
         </Setter>
