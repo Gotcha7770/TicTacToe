@@ -38,7 +38,6 @@ public class MainViewModel : ReactiveObject
 
     public ReactiveCommand<Unit, Unit> RestartCommand { get; set; }
     public ReactiveCommand<Symbol, Unit> SetPlayerCommand { get; set; }
-    public IReadOnlyCollection<GameMode> GameModes { get; } = Enum.GetValues<GameMode>();
     public GameViewModel GameViewModel => _gameViewModel.Value;
 
     public GameMode SelectedGameMode

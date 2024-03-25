@@ -1,17 +1,14 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:TicTacToe.Avalonia.ViewModels"
              xmlns:controls="clr-namespace:TicTacToe.Avalonia.Controls"
-             xmlns:models="clr-namespace:TicTacToe.Models;assembly=TicTacToe.Core"
              Height="450"
              Width="800"
              x:Class="TicTacToe.Avalonia.Views.MainView"
              x:DataType="vm:MainViewModel">
-  <Design.DataContext>
-    <vm:MainViewModel />
-  </Design.DataContext>
+    <Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
 
     <UserControl.Styles>
         <Style Selector="Button.main">
@@ -20,22 +17,22 @@
             <Setter Property="Padding" Value="24, 7" />
         </Style>
         <Style Selector="RadioButton.main.player">
-            <Setter Property="Margin" Value="8, 0"/>
+            <Setter Property="Margin" Value="8, 0" />
             <Setter Property="Padding" Value="4, 2" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="{DynamicResource GreyBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource GreyBrush}" />
             <Setter Property="Width" Value="200" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
             <Style Selector="^:checked /template/ Border#DecoratorBorder">
                 <Setter Property="BorderThickness" Value="0, 0, 0, 2" />
-                <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
             </Style>
             <Style Selector="^:checked /template/ Border#RootBorder">
                 <Setter Property="BorderThickness" Value="1" />
-                <Setter Property="BorderBrush" Value="{DynamicResource GreyBrush}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource GreyBrush}" />
             </Style>
-            <Setter Property="Template" >
+            <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RadioButton}">
                         <ControlTemplate.Content>
@@ -56,7 +53,7 @@
                                         Background="{TemplateBinding Background}"
                                         BorderBrush="{TemplateBinding BorderBrush}"
                                         BorderThickness="{TemplateBinding BorderThickness}"
-                                        CornerRadius="{TemplateBinding CornerRadius}"/>
+                                        CornerRadius="{TemplateBinding CornerRadius}" />
                             </Grid>
                         </ControlTemplate.Content>
                     </ControlTemplate>
@@ -68,7 +65,7 @@
     <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
           Width="650"
           VerticalAlignment="Center">
-        <ComboBox ItemsSource="{Binding GameModes}"
+        <ComboBox x:Name="GameModeSelector"
                   SelectedItem="{Binding SelectedGameMode}"/>
         <Grid Grid.Row="1" ColumnDefinitions="*, *">
             <RadioButton x:Name="XPlayerButton"
@@ -80,33 +77,33 @@
                           VerticalAlignment="Center"
                           Stretch="Uniform"
                           StrokeThickness="3"
-                          Stroke="White" 
-                          Data="{DynamicResource CrossIcon}"/>
+                          Stroke="White"
+                          Data="{DynamicResource CrossIcon}" />
                     <TextBlock Grid.Column="1"
                                HorizontalAlignment="Right"
                                Foreground="{DynamicResource GreyBrush}"
                                FontSize="24"
-                               Text="{Binding GameViewModel.XPlayerScore}"/>
+                               Text="{Binding GameViewModel.XPlayerScore}" />
                 </Grid>
             </RadioButton>
-            <RadioButton x:Name="OPlayerButton" 
+            <RadioButton x:Name="OPlayerButton"
                          Grid.Column="1"
                          Classes="main player"
                          HorizontalAlignment="Left">
                 <Grid ColumnDefinitions="*, *" Margin="24, 3">
-                    <Path 
+                    <Path
                         Width="16"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Stretch="Uniform"
                         StrokeThickness="3"
-                        Stroke="White" 
-                        Data="{DynamicResource NoughtIcon}"/>
+                        Stroke="White"
+                        Data="{DynamicResource NoughtIcon}" />
                     <TextBlock Grid.Column="1"
                                HorizontalAlignment="Right"
                                Foreground="{DynamicResource GreyBrush}"
                                FontSize="24"
-                               Text="{Binding GameViewModel.OPlayerScore}"/>
+                               Text="{Binding GameViewModel.OPlayerScore}" />
                 </Grid>
             </RadioButton>
         </Grid>
@@ -124,7 +121,7 @@
                                 Background="{DynamicResource PrimaryBrush}"
                                 Foreground="{DynamicResource SecondaryBrush}"
                                 Size="{Binding GameViewModel.Size}"
-                                Cells="{Binding GameViewModel.Cells}"/>
+                                Cells="{Binding GameViewModel.Cells}" />
         </Border>
         <Button Grid.Row="4"
                 Classes="main"
