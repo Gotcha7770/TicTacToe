@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="PrimaryColor">#14bdac</Color>
+    <Color x:Key="SecondaryColor">#0da192</Color>
+    <Color x:Key="WhiteColor">#f2ebd3</Color>
+    <Color x:Key="GreyColor">#9aa0a6</Color>
+    <Color x:Key="DarkGreyColor">#545454</Color>
+
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{DynamicResource PrimaryColor}" />
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource SecondaryColor}" />
+    <SolidColorBrush x:Key="WhiteBrush" Color="{DynamicResource WhiteColor}" />
+    <SolidColorBrush x:Key="GreyBrush" Color="{DynamicResource GreyColor}" />
+    <SolidColorBrush x:Key="DarkGreyBrush" Color="{DynamicResource DarkGreyColor}" />
+</ResourceDictionary>

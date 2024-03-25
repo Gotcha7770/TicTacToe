@@ -1,7 +1,6 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:TicTacToe.Avalonia"
-             xmlns:converters="clr-namespace:TicTacToe.Avalonia.Converters"
              x:Class="TicTacToe.Avalonia.App"
              RequestedThemeVariant="Default">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
@@ -17,25 +16,19 @@
     </Application.Styles>
 
     <Application.Resources>
-        <Color x:Key="PrimaryColor">#14bdac</Color>
-        <Color x:Key="SecondaryColor">#0da192</Color>
-        <Color x:Key="WhiteColor">#f2ebd3</Color>
-        <Color x:Key="GreyColor">#9aa0a6</Color>
-        <Color x:Key="DarkGreyColor">#545454</Color>
-
-        <SolidColorBrush x:Key="PrimaryBrush" Color="{DynamicResource PrimaryColor}" />
-        <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource SecondaryColor}" />
-        <SolidColorBrush x:Key="GreyBrush" Color="{DynamicResource GreyColor}" />
-
-        <GeometryGroup x:Key="CrossIcon">
-            <Geometry>M 16 16 L 112 112</Geometry>
-            <Geometry>M 112 16 L 16 112</Geometry>
-        </GeometryGroup>
-
-        <Geometry x:Key="NoughtIcon">M 64 16 A 48 48 0 1 0 64 112 A 48 48 0 1 0 64 16</Geometry>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="/Style/Colors.axaml"/>
+                <ResourceInclude Source="Style/Converters.axaml"/>
+                <ResourceDictionary>
+                    <GeometryGroup x:Key="CrossIcon">
+                        <Geometry>M 16 16 L 112 112</Geometry>
+                        <Geometry>M 112 16 L 16 112</Geometry>
+                    </GeometryGroup>
         
-        <converters:EqualityConverter x:Key="EqualityConverter" />
-
-        <converters:EqualityConverter x:Key="ReferenceEqualityConverter" IsComparedByReference="True" />
+                    <Geometry x:Key="NoughtIcon">M 64 16 A 48 48 0 1 0 64 112 A 48 48 0 1 0 64 16</Geometry>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
