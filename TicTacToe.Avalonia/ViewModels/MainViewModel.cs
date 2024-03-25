@@ -33,7 +33,7 @@ public class MainViewModel : ReactiveObject
         RestartCommand = ReactiveCommand.Create(Restart);
         SetPlayerCommand = ReactiveCommand.Create<Symbol>(x => SelectedPlayer = x);
         
-        SimpleAiPlayer.Timeout = TimeSpan.FromSeconds(1);
+        SimpleAiPlayer.Timeout = TimeSpan.FromSeconds(0.5);
     }
 
     public ReactiveCommand<Unit, Unit> RestartCommand { get; set; }
