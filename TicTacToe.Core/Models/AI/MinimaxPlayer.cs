@@ -41,11 +41,11 @@ public class MinimaxPlayer : IPlayer
             return 0;
 
         if (isMaximizing)
-            return Game.GetAvailableMoves(field, Symbol.X)
+            return Game.GetAvailableMoves(field, symbol)
                 .Select(x => field.Scope(x, f => MinimaxRecursive(f, symbol, ++depth, false)))
                 .Max();
     
-        return Game.GetAvailableMoves(field, Symbol.O)
+        return Game.GetAvailableMoves(field, symbol.Reverse())
             .Select(x => field.Scope(x, f => MinimaxRecursive(f, symbol, ++depth)))
             .Min();
     }
