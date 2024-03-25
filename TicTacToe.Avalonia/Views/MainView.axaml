@@ -19,9 +19,49 @@
             <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
             <Setter Property="Padding" Value="24, 7" />
         </Style>
-        <Style Selector="Button.main.player">
+        <Style Selector="RadioButton.main.player">
+            <Setter Property="Margin" Value="8, 0"/>
             <Setter Property="Padding" Value="4, 2" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{DynamicResource GreyBrush}"/>
             <Setter Property="Width" Value="200" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Style Selector="^:checked /template/ Border#DecoratorBorder">
+                <Setter Property="BorderThickness" Value="0, 0, 0, 2" />
+                <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+            </Style>
+            <Style Selector="^:checked /template/ Border#RootBorder">
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderBrush" Value="{DynamicResource GreyBrush}"/>
+            </Style>
+            <Setter Property="Template" >
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <ControlTemplate.Content>
+                            <Grid>
+                                <Border Name="RootBorder"
+                                        CornerRadius="{TemplateBinding CornerRadius}">
+
+                                    <ContentPresenter Name="PART_ContentPresenter"
+                                                      Margin="{TemplateBinding Padding}"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      Content="{TemplateBinding Content}"
+                                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                      Foreground="{TemplateBinding Foreground}"
+                                                      RecognizesAccessKey="True" />
+                                </Border>
+                                <Border Name="DecoratorBorder"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{TemplateBinding CornerRadius}"/>
+                            </Grid>
+                        </ControlTemplate.Content>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </UserControl.Styles>
 
@@ -31,10 +71,9 @@
         <ComboBox ItemsSource="{Binding GameModes}"
                   SelectedItem="{Binding SelectedGameMode}"/>
         <Grid Grid.Row="1" ColumnDefinitions="*, *">
-            <Button Classes="main player"
-                    HorizontalAlignment="Right"
-                    Command="{Binding SetPlayerCommand}"
-                    CommandParameter="{x:Static models:Symbol.X}">
+            <RadioButton x:Name="XPlayerButton"
+                         Classes="main player"
+                         HorizontalAlignment="Right">
                 <Grid ColumnDefinitions="*, *" Margin="24, 3">
                     <Path Width="16"
                           HorizontalAlignment="Left"
@@ -49,12 +88,11 @@
                                FontSize="24"
                                Text="{Binding GameViewModel.XPlayerScore}"/>
                 </Grid>
-            </Button>
-            <Button Grid.Column="1"
-                    Classes="main player"
-                    HorizontalAlignment="Left"
-                    Command="{Binding SetPlayerCommand}"
-                    CommandParameter="{x:Static models:Symbol.O}">
+            </RadioButton>
+            <RadioButton x:Name="OPlayerButton" 
+                         Grid.Column="1"
+                         Classes="main player"
+                         HorizontalAlignment="Left">
                 <Grid ColumnDefinitions="*, *" Margin="24, 3">
                     <Path 
                         Width="16"
@@ -70,7 +108,7 @@
                                FontSize="24"
                                Text="{Binding GameViewModel.OPlayerScore}"/>
                 </Grid>
-            </Button>
+            </RadioButton>
         </Grid>
         <TextBlock Grid.Row="2"
                    Margin="12"
