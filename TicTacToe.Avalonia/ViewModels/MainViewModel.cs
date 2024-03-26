@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive;
 using ReactiveUI;
 using TicTacToe.Models;
@@ -33,7 +32,8 @@ public class MainViewModel : ReactiveObject
         RestartCommand = ReactiveCommand.Create(Restart);
         SetPlayerCommand = ReactiveCommand.Create<Symbol>(x => SelectedPlayer = x);
         
-        SimpleAiPlayer.Timeout = TimeSpan.FromSeconds(0.5);
+        SimpleAiPlayer.Timeout = TimeSpan.FromSeconds(0.2);
+        MinimaxPlayer.Timeout = TimeSpan.FromSeconds(0.2);
     }
 
     public ReactiveCommand<Unit, Unit> RestartCommand { get; set; }

@@ -6,6 +6,8 @@ namespace TicTacToe.Models.AI;
 // https://thecode.media/tic-tac-toe/
 public class MinimaxPlayer : IPlayer
 {
+    public static TimeSpan Timeout { get; set; } = TimeSpan.Zero;
+
     public MinimaxPlayer(Symbol symbol)
     {
         Symbol = symbol;
@@ -13,8 +15,9 @@ public class MinimaxPlayer : IPlayer
 
     public Symbol Symbol { get; }
 
-    public ValueTask<Move> GetNextMove(Field field, CancellationToken cancellationToken = default)
+    public async ValueTask<Move> GetNextMove(Field field, CancellationToken cancellationToken = default)
     {
+        await Task.Delay(Timeout, cancellationToken);
         var bestScore = int.MinValue;
         Move bestMove = null;
 
@@ -28,7 +31,7 @@ public class MinimaxPlayer : IPlayer
             }
         }
 
-        return ValueTask.FromResult(bestMove);
+        return bestMove;
     }
     
     private static int MinimaxRecursive(Field field, Symbol symbol, byte depth = 0, bool isMaximizing = true)
