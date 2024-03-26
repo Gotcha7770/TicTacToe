@@ -112,7 +112,7 @@ public class GameViewModel : ReactiveObject, IDisposable
             }
         }
         
-        return _cells.Select(x => x.Move).Merge();
+        return _cells.Select(x => x.Move.Select(cell => new Move(cell, CurrentPlayer.Symbol))).Merge();
     }
 
     private IDisposable CreateNewGame()

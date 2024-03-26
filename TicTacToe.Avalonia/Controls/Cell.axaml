@@ -19,8 +19,7 @@
                         CornerRadius="0"
                         Content="{TemplateBinding Content}"
                         Background="{TemplateBinding Background}"
-                        Command="{TemplateBinding Command}"
-                        CommandParameter="{TemplateBinding CommandParameter}">
+                        Command="{TemplateBinding Command}">
                     <Button.Styles>
                         <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
                             <Setter Property="Background" Value="{TemplateBinding Background}"/>

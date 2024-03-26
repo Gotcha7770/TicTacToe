@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Linq;
 using ReactiveUI;
 using TicTacToe.Models;
@@ -11,13 +12,13 @@ public class CellViewModel : ReactiveObject
 
     public CellViewModel(Cell cell)
     {
-        PressedCommand = ReactiveCommand.Create<Symbol, Symbol>(x => x, this.WhenAnyValue(x => x.Symbol).Select(x => x is null));
-        Move = PressedCommand.Select(x => new Move(cell, x));
+        PressedCommand = ReactiveCommand.Create(() => { }, this.WhenAnyValue(x => x.Symbol).Select(x => x is null));
+        Move = PressedCommand.Select(_ => cell);
     }
 
-    public ReactiveCommand<Symbol, Symbol> PressedCommand { get; }
+    public ReactiveCommand<Unit, Unit> PressedCommand { get; }
 
-    public IObservable<Move> Move { get; }
+    public IObservable<Cell> Move { get; }
 
     public Symbol? Symbol
     {
