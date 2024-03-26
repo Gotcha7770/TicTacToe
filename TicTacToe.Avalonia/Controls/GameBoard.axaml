@@ -37,10 +37,32 @@
                                                 <Style Selector="Path.cross">
                                                     <Setter Property="Data" Value="{DynamicResource CrossIcon}" />
                                                     <Setter Property="Stroke" Value="{DynamicResource DarkGreyColor}" />
+                                                    <Setter Property="StrokeDashArray" Value="100"/>
+                                                    <Style.Animations>
+                                                        <Animation Duration="0:0:0.5" Easing="QuarticEaseIn">
+                                                            <KeyFrame Cue="0%">
+                                                                <Setter Property="StrokeDashOffset" Value="100"/>
+                                                            </KeyFrame>
+                                                            <KeyFrame Cue="100%">
+                                                                <Setter Property="StrokeDashOffset" Value="0"/>
+                                                            </KeyFrame>
+                                                        </Animation>
+                                                    </Style.Animations>
                                                 </Style>
                                                 <Style Selector="Path.nought">
                                                     <Setter Property="Data" Value="{DynamicResource NoughtIcon}" />
                                                     <Setter Property="Stroke" Value="{DynamicResource WhiteColor}" />
+                                                    <Setter Property="StrokeDashArray" Value="100"/>
+                                                    <Style.Animations>
+                                                        <Animation Duration="0:0:0.5" Easing="QuarticEaseIn">
+                                                            <KeyFrame Cue="0%">
+                                                                <Setter Property="StrokeDashOffset" Value="100"/>
+                                                            </KeyFrame>
+                                                            <KeyFrame Cue="100%">
+                                                                <Setter Property="StrokeDashOffset" Value="0"/>
+                                                            </KeyFrame>
+                                                        </Animation>
+                                                    </Style.Animations>
                                                 </Style>
                                             </Path.Styles>
                                         </Path>
