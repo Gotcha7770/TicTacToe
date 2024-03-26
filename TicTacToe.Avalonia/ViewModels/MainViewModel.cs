@@ -2,6 +2,7 @@
 using System.Reactive;
 using Microsoft.Extensions.Configuration;
 using ReactiveUI;
+using Splat;
 using TicTacToe.ChatGPT;
 using TicTacToe.Models;
 using TicTacToe.Models.AI;
@@ -27,7 +28,7 @@ public class MainViewModel : ReactiveObject
     
     public MainViewModel()
     {
-        _configuration = null;
+        _configuration = Locator.Current.GetService<IConfiguration>();
         _gameViewModel = this.WhenAnyValue(
             x => x.SelectedGameMode,
             x => x.SelectedPlayer, 

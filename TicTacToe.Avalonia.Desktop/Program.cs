@@ -1,6 +1,8 @@
 ﻿using System;
 using Avalonia;
 using Avalonia.ReactiveUI;
+using Microsoft.Extensions.Configuration;
+using Splat;
 
 namespace TicTacToe.Avalonia.Desktop;
 
@@ -11,6 +13,10 @@ sealed class Program
     // yet and stuff might break.
     [STAThread]
     public static void Main(string[] args) => BuildAvaloniaApp()
+        .AfterSetup(_ =>
+        {
+            Locator.CurrentMutable.Register(() => CreateConfiguration(args));
+        })
         .StartWithClassicDesktopLifetime(args);
 
     // Avalonia configuration, don't remove; also used by visual designer.
@@ -19,4 +25,13 @@ sealed class Program
         .WithInterFont()
         .LogToTrace()
         .UseReactiveUI();
+
+    public static IConfiguration CreateConfiguration(string[] args)
+    {
+        return new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .AddEnvironmentVariables()
+            .AddCommandLine(args)
+            .Build();
+    }
 }
