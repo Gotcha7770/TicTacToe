@@ -12,11 +12,10 @@ public partial class MainView : UserControl, IViewFor<MainViewModel>
     public MainView()
     {
         InitializeComponent();
+        GameModeSelector.ItemsSource = Enum.GetValues<GameMode>();
 
         this.WhenActivated(disposable =>
         {
-            GameModeSelector.ItemsSource = Enum.GetValues<GameMode>();
-
             this.Bind(ViewModel,
                     viewModel => viewModel.SelectedPlayer,
                     view => view.XPlayerButton.IsChecked,
