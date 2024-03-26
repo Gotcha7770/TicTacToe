@@ -7,7 +7,23 @@ namespace TicTacToe.Core.Tests;
 public class MinimaxPlayerTests
 {
     private static readonly Symbol? _ = null;
-    
+
+    [Fact]
+    public async Task Opening_OPlayerMovesToCenter()
+    {
+        var player = new MinimaxPlayer(O);
+        var field = new Field(new[,]
+        {
+            { _, _, _ },
+            { _, _, _ }, // <- [1, 1]
+            { X, _, _ }
+        });
+
+        var move = await player.GetNextMove(field);
+        move.Should()
+            .Be(new Move(new Cell(1, 1), O));
+    }
+
     [Fact]
     public async Task OneMoveToWin_PlayerDoThatMove()
     {

@@ -73,10 +73,21 @@ public class Field
         }
     }
 
+    public override string ToString()
+    {
+        return $"""
+               {GetSymbol(0, 0)} {GetSymbol(0, 1)} {GetSymbol(0, 2)}
+               {GetSymbol(1, 0)} {GetSymbol(1, 1)} {GetSymbol(1, 2)}
+               {GetSymbol(2, 0)} {GetSymbol(2, 1)} {GetSymbol(2, 2)}
+               """;
+
+        string GetSymbol(int row, int column) => _symbols[row, column] is Symbol symbol ? symbol.ToString() : "_";
+    }
+
     protected Symbol? this[Cell cell]
     {
         get => _symbols[cell.Row, cell.Column];
-        set => _symbols[cell.Row, cell.Column] = value;
+        private set => _symbols[cell.Row, cell.Column] = value;
     }
 
     private IEnumerable<IEnumerable<Symbol?>> GetRows()

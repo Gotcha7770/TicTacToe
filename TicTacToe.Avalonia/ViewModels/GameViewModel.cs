@@ -61,7 +61,8 @@ public class GameViewModel : ReactiveObject, IDisposable
         
         _subscription = new CompositeDisposable
         {
-            CreateNewGame()
+            CreateNewGame(),
+            aiPlayer as IDisposable ?? Disposable.Empty
         };
     }
 

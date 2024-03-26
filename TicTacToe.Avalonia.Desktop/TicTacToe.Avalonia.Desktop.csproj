@@ -21,4 +21,10 @@
     <ItemGroup>
         <ProjectReference Include="..\TicTacToe.Avalonia\TicTacToe.Avalonia.csproj"/>
     </ItemGroup>
+
+    <ItemGroup>
+      <None Update="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
 </Project>

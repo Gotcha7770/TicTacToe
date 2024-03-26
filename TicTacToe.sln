@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe.Avalonia.Desktop"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe.Avalonia.iOS", "TicTacToe.Avalonia.iOS\TicTacToe.Avalonia.iOS.csproj", "{5D6BA19B-B067-44DD-97A2-E93AB673858F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe.ChatGPT", "TicTacToe.ChatGPT\TicTacToe.ChatGPT.csproj", "{189D2D2B-9505-4C36-A3C0-CB4BDCE1D400}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{5D6BA19B-B067-44DD-97A2-E93AB673858F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D6BA19B-B067-44DD-97A2-E93AB673858F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D6BA19B-B067-44DD-97A2-E93AB673858F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{189D2D2B-9505-4C36-A3C0-CB4BDCE1D400}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{189D2D2B-9505-4C36-A3C0-CB4BDCE1D400}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{189D2D2B-9505-4C36-A3C0-CB4BDCE1D400}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{189D2D2B-9505-4C36-A3C0-CB4BDCE1D400}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

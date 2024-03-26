@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reactive;
+using Microsoft.Extensions.Configuration;
 using ReactiveUI;
+using TicTacToe.ChatGPT;
 using TicTacToe.Models;
 using TicTacToe.Models.AI;
 
@@ -11,11 +13,13 @@ public enum GameMode
     Easy,
     Medium,
     Hard,
+    ChatGPT,
     HotSeat
 }
 
 public class MainViewModel : ReactiveObject
 {
+    private readonly IConfiguration _configuration;
     private readonly ObservableAsPropertyHelper<GameViewModel> _gameViewModel;
 
     private GameMode _gameMode;
@@ -23,6 +27,7 @@ public class MainViewModel : ReactiveObject
     
     public MainViewModel()
     {
+        _configuration = null;
         _gameViewModel = this.WhenAnyValue(
             x => x.SelectedGameMode,
             x => x.SelectedPlayer, 
@@ -61,7 +66,8 @@ public class MainViewModel : ReactiveObject
             GameMode.Easy => new GameViewModel(new SimpleAiPlayer(selectedPlayer.Reverse()), new BoardSize(3, 3)),
             //GameMode.Medium => new GameViewModel(CreateOPlayer(mode), new BoardSize(3, 3)),
             GameMode.Hard => new GameViewModel(new MinimaxPlayer(selectedPlayer.Reverse()), new BoardSize(3, 3)),
-            GameMode.HotSeat => new GameViewModel(new BoardSize(3, 3)),
+            GameMode.ChatGPT => new GameViewModel(new ChatGPTPlayer(selectedPlayer.Reverse(), _configuration), new BoardSize(3, 3)),
+            GameMode.HotSeat => new GameViewModel(new BoardSize(3, 3))
         };
     }
 }
