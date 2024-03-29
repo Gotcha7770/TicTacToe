@@ -18,12 +18,13 @@ public class GameViewModel : ReactiveObject, IDisposable
     private readonly OPlayer _oPlayer;
     private readonly CellViewModel[] _cells;
 
-    private IDisposable _subscription;
+    private readonly IDisposable _fullCleanup;
     private GameState _currentState;
     private IPlayer _currentPlayer;
     private BoardSize _size;
     private int _xPlayerScore;
     private int _oPlayerScore;
+    private IDisposable _gameCleanup;
 
     public IReadOnlyCollection<CellViewModel> Cells => _cells;
 
@@ -35,10 +36,10 @@ public class GameViewModel : ReactiveObject, IDisposable
 
         _xPlayer = new HumanPlayer(Symbol.X, userMove).AsXPlayer();
         _oPlayer = new HumanPlayer(Symbol.O, userMove).AsOPlayer();
-        
-        _subscription = new CompositeDisposable
+
+        _fullCleanup = new CompositeDisposable
         {
-            CreateNewGame()
+            Disposable.Create(_gameCleanup.Dispose),
         };
     }
 
@@ -58,10 +59,11 @@ public class GameViewModel : ReactiveObject, IDisposable
             _xPlayer = new HumanPlayer(Symbol.X, userMove).AsXPlayer();
             _oPlayer = aiPlayer.AsOPlayer();
         }
-        
-        _subscription = new CompositeDisposable
+
+        _gameCleanup = CreateNewGame();
+        _fullCleanup = new CompositeDisposable
         {
-            CreateNewGame(),
+            Disposable.Create(() => _gameCleanup?.Dispose()),
             aiPlayer as IDisposable ?? Disposable.Empty
         };
     }
@@ -96,11 +98,11 @@ public class GameViewModel : ReactiveObject, IDisposable
         set => this.RaiseAndSetIfChanged(ref _oPlayerScore, value);
     }
 
-    public void Restart() => _subscription = CreateNewGame();
+    public void Restart() => _gameCleanup = CreateNewGame();
 
     public void Dispose() 
     {
-        _subscription?.Dispose();
+        _fullCleanup?.Dispose();
     }
 
     private IObservable<Move> InitializeCells(BoardSize size)
@@ -118,7 +120,7 @@ public class GameViewModel : ReactiveObject, IDisposable
 
     private IDisposable CreateNewGame()
     {
-        _subscription?.Dispose();
+        _gameCleanup?.Dispose();
         ResetCells();
 
         var game = new Game(_xPlayer, _oPlayer);
