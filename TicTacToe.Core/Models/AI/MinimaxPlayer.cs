@@ -23,7 +23,7 @@ public class MinimaxPlayer : IPlayer
 
         foreach (var move in field.GetEmptyCells().Select(x => new Move(x, Symbol)))
         {
-            int score = field.Scope(move, f => MinimaxRecursive(f, Symbol, isMaximizing: false));
+            int score = field.Scope(move, f => Minimax(f, Symbol, isMaximizing: false));
             if (score > bestScore)
             {
                 bestScore = score;
@@ -34,22 +34,24 @@ public class MinimaxPlayer : IPlayer
         return bestMove;
     }
     
-    private static int MinimaxRecursive(Field field, Symbol symbol, byte depth = 0, bool isMaximizing = true)
+    private int Minimax(Field field, Symbol symbol, byte depth = 0, bool isMaximizing = true)
     {
-        var winner = Game.GetWinner(field);
+        var winner = field.GetWinner();
         if (winner.HasValue)
-            return winner == symbol ? 10 - depth : depth - 10;
+            return winner == Symbol ? 10 - depth : depth - 10;
     
         if (Game.IsDraw(field))
             return 0;
 
+        symbol = symbol.Reverse();
+        ++depth;
         if (isMaximizing)
             return Game.GetAvailableMoves(field, symbol)
-                .Select(x => field.Scope(x, f => MinimaxRecursive(f, symbol, ++depth, false)))
+                .Select(x => field.Scope(x, f => Minimax(f, symbol, depth, false)))
                 .Max();
-    
-        return Game.GetAvailableMoves(field, symbol.Reverse())
-            .Select(x => field.Scope(x, f => MinimaxRecursive(f, symbol, ++depth)))
+
+        return Game.GetAvailableMoves(field, symbol)
+            .Select(x => field.Scope(x, f => Minimax(f, symbol, depth)))
             .Min();
     }
 }

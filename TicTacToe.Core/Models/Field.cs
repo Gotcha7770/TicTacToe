@@ -32,7 +32,7 @@ public class Field
         }
     }
 
-    public Symbol? GetWinner()
+    internal Symbol? GetWinner()
     {
         foreach (var symbol in Enum.GetValues<Symbol>())
         {

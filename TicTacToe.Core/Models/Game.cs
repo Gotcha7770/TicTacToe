@@ -66,24 +66,10 @@ public class Game
     internal static bool IsDraw(Field field) => field.GetEmptyCells().IsEmpty();
 
     internal static bool IsWinner(Field field, Symbol symbol) => field.GetAllLines().Any(x => x.IsAllSymbolsAre(symbol));
-    
-    internal static Symbol? GetWinner(Field field)
-    {
-        foreach (var line in field.GetAllLines())
-        {
-            foreach (var player in Enum.GetValues<Symbol>())
-            {
-                if (line.IsAllSymbolsAre(player))
-                    return player;
-            }
-        }
-
-        return null;
-    }
 
     internal static int Score(Field field, Symbol symbol, byte depth)
     {
-        var winner = GetWinner(field);
+        var winner = field.GetWinner();
         if (winner.HasValue)
         {
             return winner == symbol ? 10 - depth : depth - 10;
