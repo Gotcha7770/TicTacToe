@@ -61,6 +61,18 @@ public class MinimaxPlayerTests
         move = await player.GetNextMove(field);
         move.Should()
             .Be(new Move(new Cell(1, 2), X));
+        
+        field = new Field(new[,]
+        {
+            { O, X, O },
+            { X, O, _ }, 
+            { X, X, _ } // <- [2, 2]
+        });
+
+        player = new MinimaxPlayer(O);
+        move = await player.GetNextMove(field);
+        move.Should()
+            .Be(new Move(new Cell(2, 2), O));
     }
 
     [Fact]
