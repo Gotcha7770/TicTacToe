@@ -21,7 +21,7 @@ public class MinimaxPlayer : IPlayer
         var bestScore = int.MinValue;
         Move bestMove = null;
 
-        foreach (var move in field.GetEmptyCells().Select(x => new Move(x, Symbol)))
+        foreach (var move in Game.GetAvailableMoves(field, Symbol))
         {
             int score = field.Scope(move, f => Minimax(f, Symbol));
             if (score > bestScore)

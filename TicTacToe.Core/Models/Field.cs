@@ -17,6 +17,9 @@ public class Field
 
     public void Apply(Move move)
     {
+        if (this[move.Cell] is not null)
+            throw new InvalidOperationException();
+
         this[move.Cell] = move.Symbol;
     }
 
@@ -30,17 +33,6 @@ public class Field
                     yield return new Cell(i, j);
             }
         }
-    }
-
-    internal Symbol? GetWinner()
-    {
-        foreach (var symbol in Enum.GetValues<Symbol>())
-        {
-            if(GetAllLines().Any(x => x.IsAllSymbolsAre(symbol)))
-                return symbol;
-        }
-
-        return null;
     }
 
     public IEnumerable<IEnumerable<Symbol?>> GetAllLines()
@@ -58,8 +50,9 @@ public class Field
         yield return GetLeftDiagonal();
         yield return GetRightDiagonal();
     }
-    
+
     //TODO: naming?
+
     public T Scope<T>(Move move, Func<Field, T> selector)
     {
         try
@@ -84,10 +77,21 @@ public class Field
         string GetSymbol(int row, int column) => _symbols[row, column] is Symbol symbol ? symbol.ToString() : "_";
     }
 
-    protected Symbol? this[Cell cell]
+    internal Symbol? GetWinner()
+    {
+        foreach (var symbol in Enum.GetValues<Symbol>())
+        {
+            if(GetAllLines().Any(x => x.IsAllSymbolsAre(symbol)))
+                return symbol;
+        }
+
+        return null;
+    }
+
+    private Symbol? this[Cell cell]
     {
         get => _symbols[cell.Row, cell.Column];
-        private set => _symbols[cell.Row, cell.Column] = value;
+        set => _symbols[cell.Row, cell.Column] = value;
     }
 
     private IEnumerable<IEnumerable<Symbol?>> GetRows()
