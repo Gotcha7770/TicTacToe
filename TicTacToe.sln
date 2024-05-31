@@ -39,6 +39,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TicTactToe.Console.MVU", "T
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TicTacToe.FS.Tests", "TicTacToe.FS.Tests\TicTacToe.FS.Tests.fsproj", "{A29C6CB0-88F8-4224-9E79-5A92F4C456D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectre.Console.Widgets", "Spectre.Console.Widgets\Spectre.Console.Widgets.csproj", "{533C869A-383C-47B5-B061-5FB13E5945C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
