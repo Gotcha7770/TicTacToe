@@ -1,12 +1,8 @@
-﻿module TicTacTos.FS.Domain
+﻿module TicTacToe.FS.Domain
 
-type HorizontalPosition = Left | HCenter | Right
-type VerticalPosition = Top | VCenter | Bottom
-
+type HorizontalPosition = Left | Center | Right
+type VerticalPosition = Top | Middle | Bottom
 type CellPosition = HorizontalPosition * VerticalPosition
-
-type XPosition = XPosition of CellPosition
-type OPosition = OPosition of CellPosition
 
 type Player = PlayerO | PlayerX
 
@@ -15,25 +11,40 @@ type CellState =
     | Empty
 
 type Cell = {
-    pos : CellPosition
-    state : CellState
+    Position : CellPosition
+    State : CellState
+    } with
+    static member Empty position =
+        { Position = position; State = Empty}
+
+/// Everything the UI needs to know to display the board
+type DisplayInfo = {
+    Cells : Cell list
     }
 
-type ValidMovesForPlayerX = XPosition list
-type ValidMovesForPlayerO = OPosition list
+type MoveCapability = unit -> MoveResult
 
-// abstract base class
-type GameState() = class end
+/// A capability along with the position the capability is associated with.
+/// This allows the UI to show information so that the user
+/// can pick a particular capability to exercise.
+and NextMoveInfo = {
+    // the pos is for UI information only
+    // the actual pos is baked into the cap.
+    PositionToPlay : CellPosition
+    Capability : MoveCapability
+    }
 
-type MoveResult =
-    | PlayerXToMove of ValidMovesForPlayerX
-    | PlayerOToMove of ValidMovesForPlayerO
-    | GameWon of Player
-    | GameTied
+/// The result of a move. It includes:
+/// * The information on the current board state.
+/// * The capabilities for the next move, if any.
+and MoveResult =
+    | PlayerXToMove of DisplayInfo * NextMoveInfo list
+    | PlayerOToMove of DisplayInfo * NextMoveInfo list
+    | GameWon of DisplayInfo * Player
+    | GameTied of DisplayInfo
 
-// the "use-cases"
-type NewGame<'GameState> = 'GameState * MoveResult
-type PlayerXMoves<'GameState> = 'GameState * XPosition -> 'GameState * MoveResult
-type PlayerOMoves<'GameState> = 'GameState * OPosition -> 'GameState * MoveResult
-
-type GetCells<'GameState> = 'GameState -> Cell list
+// Only the newGame function is exported from the implementation
+// all other functions come from the results of the previous move
+type TicTacToeAPI = {
+    NewGame : MoveCapability
+    }
