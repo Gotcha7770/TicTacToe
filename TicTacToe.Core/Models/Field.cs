@@ -14,6 +14,19 @@ public class Field
     {
         _symbols = symbols;
     }
+    
+    internal Field(Symbol?[] symbols)
+    {
+        _symbols = new Symbol?[3,3];
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                _symbols[i, j] = symbols[i * 3 + j];
+            }
+        }
+    }
 
     public void Apply(Move move)
     {
