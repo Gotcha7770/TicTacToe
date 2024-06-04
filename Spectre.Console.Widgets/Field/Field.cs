@@ -1,6 +1,6 @@
 ﻿using Spectre.Console.Rendering;
 
-namespace Spectre.Console.Widgets;
+namespace Spectre.Console.Widgets.Field;
 
 public class Field : Renderable
 {
@@ -12,16 +12,20 @@ public class Field : Renderable
 
     protected override IEnumerable<Segment> Render(RenderOptions options, int maxWidth)
     {
-        if (CellSize < 0)
+        if (Size is { Width: < 3 } or { Height: < 3 })
         {
-            throw new InvalidOperationException("Cell size must be greater than zero.");
+            throw new InvalidOperationException("Size 3 is the minimum meaningful game field size.");
+        }
+        if (CellSize < 1)
+        {
+            throw new InvalidOperationException("Cell size 3 must be greater than zero.");
         }
 
-        if (PixelWidth < 0)
+        if (PixelWidth < 1)
         {
             throw new InvalidOperationException("Pixel width must be greater than zero.");
         }
-
+        
         var pixel = new string(' ', PixelWidth);
         for (var y = 0; y < Size.Height * (CellSize + 1) - 1; y++)
         {
@@ -30,7 +34,7 @@ public class Field : Renderable
                 var color = GetColor(x, y);
                 yield return new Segment(pixel, new Style(background: color));
             }
-
+        
             yield return Segment.LineBreak;
         }
     }
