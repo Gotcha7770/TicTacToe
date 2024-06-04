@@ -9,8 +9,8 @@ public class GameTests
     [Fact]
     public async Task TwoSimplePlayers()
     {
-        var x = SimpleAiPlayer.FromX();
-        var o = SimpleAiPlayer.FromO();
+        var x = SimpleAiStrategy.FromX();
+        var o = SimpleAiStrategy.FromO();
         var game = new Game(x, o);
 
         while (await game.NextMove(CancellationToken.None)) { }

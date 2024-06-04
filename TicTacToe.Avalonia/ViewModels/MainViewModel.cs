@@ -38,8 +38,8 @@ public class MainViewModel : ReactiveObject
         RestartCommand = ReactiveCommand.Create(Restart);
         SetPlayerCommand = ReactiveCommand.Create<Symbol>(x => SelectedPlayer = x);
         
-        SimpleAiPlayer.Timeout = TimeSpan.FromSeconds(0.2);
-        MinimaxPlayer.Timeout = TimeSpan.FromSeconds(0.2);
+        SimpleAiStrategy.Timeout = TimeSpan.FromSeconds(0.2);
+        MinimaxStrategy.Timeout = TimeSpan.FromSeconds(0.2);
     }
 
     public ReactiveCommand<Unit, Unit> RestartCommand { get; set; }
@@ -64,10 +64,10 @@ public class MainViewModel : ReactiveObject
     {
         return mode switch
         {
-            GameMode.Easy => new GameViewModel(new SimpleAiPlayer(selectedPlayer.Reverse()), new BoardSize(3, 3)),
+            GameMode.Easy => new GameViewModel(new SimpleAiStrategy(), selectedPlayer.Reverse(), new BoardSize(3, 3)),
             //GameMode.Medium => new GameViewModel(CreateOPlayer(mode), new BoardSize(3, 3)),
-            GameMode.Hard => new GameViewModel(new MinimaxPlayer(selectedPlayer.Reverse()), new BoardSize(3, 3)),
-            GameMode.ChatGPT => new GameViewModel(new ChatGPTPlayer(selectedPlayer.Reverse(), _configuration), new BoardSize(3, 3)),
+            GameMode.Hard => new GameViewModel(new MinimaxStrategy(), selectedPlayer.Reverse(), new BoardSize(3, 3)),
+            GameMode.ChatGPT => new GameViewModel(new ChatGptStrategy(_configuration), selectedPlayer.Reverse(), new BoardSize(3, 3)),
             GameMode.HotSeat => new GameViewModel(new BoardSize(3, 3))
         };
     }

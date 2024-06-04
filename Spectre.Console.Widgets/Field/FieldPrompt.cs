@@ -6,11 +6,15 @@ public class FieldPrompt : IPrompt<Cell>
 {
     private readonly Field _field;
 
-    public Cell CurrentCell = new(0, 0);
+    private Cell _currentCell = new(0, 0);
+    private readonly int _hStep;
+    private readonly int _vStep;
 
     public FieldPrompt(Field field)
     {
         _field = field;
+        _hStep = (_field.CellSize + 1) * _field.PixelWidth;
+        _vStep = _field.CellSize + 1;
     }
 
     public Cell Show(IAnsiConsole console)
@@ -35,7 +39,6 @@ public class FieldPrompt : IPrompt<Cell>
         }
 
         int center = AnsiConsole.Profile.Width / 2;
-        int cellWidth = (_field.CellSize + 1) * _field.PixelWidth;
         var horizontalPadder = new Padder(new Markup(Emoji.Known.FastDownButton), new Padding(0, 0));
         var verticalPadder = new Padder(new Markup(":fast_forward_button:"), new Padding(0, 0));
 
@@ -64,9 +67,9 @@ public class FieldPrompt : IPrompt<Cell>
 
                     if (result is FieldPromptInputResult.Refresh)
                     {
-                        int horizontalPadding = center + (cellWidth * CurrentCell.Column) - cellWidth;
+                        int horizontalPadding = center + (_hStep * _currentCell.Column) - _hStep;
                         horizontalPadder.PadLeft(horizontalPadding);
-                        int verticalPadding = 2 + (_field.CellSize + 1) * CurrentCell.Row;
+                        int verticalPadding = 2 + _vStep * _currentCell.Row;
                         verticalPadder.PadTop(verticalPadding);
                         ctx.Refresh();
                     }
@@ -84,7 +87,7 @@ public class FieldPrompt : IPrompt<Cell>
         
         console.Clear();
 
-        return CurrentCell;
+        return _currentCell;
     }
 
     private FieldPromptInputResult HandleInput(ConsoleKey key)
@@ -93,24 +96,24 @@ public class FieldPrompt : IPrompt<Cell>
         {
             return FieldPromptInputResult.Submit;
         }
-        if (key is ConsoleKey.LeftArrow && CurrentCell.Column > 0)
+        if (key is ConsoleKey.LeftArrow && _currentCell.Column > 0)
         {
-            CurrentCell = CurrentCell with { Column = (byte)(CurrentCell.Column - 1) };
+            _currentCell = _currentCell with { Column = (byte)(_currentCell.Column - 1) };
             return FieldPromptInputResult.Refresh;
         }
-        if (key is ConsoleKey.RightArrow && CurrentCell.Column < _field.Size.Width - 1)
+        if (key is ConsoleKey.RightArrow && _currentCell.Column < _field.Size.Width - 1)
         {
-            CurrentCell = CurrentCell with { Column = (byte)(CurrentCell.Column + 1) };
+            _currentCell = _currentCell with { Column = (byte)(_currentCell.Column + 1) };
             return FieldPromptInputResult.Refresh;
         }
-        if (key is ConsoleKey.UpArrow && CurrentCell.Row > 0)
+        if (key is ConsoleKey.UpArrow && _currentCell.Row > 0)
         {
-            CurrentCell = CurrentCell with { Row = (byte)(CurrentCell.Row - 1) };
+            _currentCell = _currentCell with { Row = (byte)(_currentCell.Row - 1) };
             return FieldPromptInputResult.Refresh;
         }
-        if (key is ConsoleKey.DownArrow && CurrentCell.Row < _field.Size.Height - 1)
+        if (key is ConsoleKey.DownArrow && _currentCell.Row < _field.Size.Height - 1)
         {
-            CurrentCell = CurrentCell with { Row = (byte)(CurrentCell.Row + 1) };
+            _currentCell = _currentCell with { Row = (byte)(_currentCell.Row + 1) };
             return FieldPromptInputResult.Refresh;
         }
 

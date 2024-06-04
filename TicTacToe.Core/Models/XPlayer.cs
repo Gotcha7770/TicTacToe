@@ -4,20 +4,17 @@ namespace TicTacToe.Models;
 
 public class XPlayer : IPlayer
 {
-    private readonly IPlayer _player;
+    private readonly IStrategy _strategy;
 
-    public XPlayer(IPlayer player)
+    public XPlayer(IStrategy strategy)
     {
-        if (player.Symbol is not Symbol.X)
-            throw new ArgumentException(nameof(player.Symbol));
-
-        _player = player;
+        _strategy = strategy;
     }
 
     public Symbol Symbol => Symbol.X;
 
     public ValueTask<Move> GetNextMove(Field field, CancellationToken cancellationToken = default)
     {
-        return _player.GetNextMove(field, cancellationToken);
+        return _strategy.GetNextMove(field, Symbol, cancellationToken);
     }
 }

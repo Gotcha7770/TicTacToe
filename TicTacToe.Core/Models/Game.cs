@@ -9,7 +9,9 @@ public enum GameState
     Draw
 }
 
+// https://github.com/DotNetDevs/TicTacToe/blob/master/TicTacToe/Classes/TicTacToeCpuInput.cs
 // https://www.xchen.tech/mywork/blog-post-one-g54cj-24mzx-czgpd
+
 public class Game
 {
     private readonly Field _field;

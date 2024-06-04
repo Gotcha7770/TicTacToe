@@ -34,8 +34,8 @@ public class GameViewModel : ReactiveObject, IDisposable
         _cells = new CellViewModel[size.Rows * size.Columns];
         var userMove = InitializeCells(size);
 
-        _xPlayer = new HumanPlayer(Symbol.X, userMove).AsXPlayer();
-        _oPlayer = new HumanPlayer(Symbol.O, userMove).AsOPlayer();
+        _xPlayer = new HumanStrategy(userMove).AsXPlayer();
+        _oPlayer = new HumanStrategy(userMove).AsOPlayer();
 
         _fullCleanup = new CompositeDisposable
         {
@@ -43,28 +43,28 @@ public class GameViewModel : ReactiveObject, IDisposable
         };
     }
 
-    public GameViewModel(IPlayer aiPlayer, BoardSize size)
+    public GameViewModel(IAIStrategy strategy, Symbol aiPlayer, BoardSize size)
     {
         Size = size;
         _cells = new CellViewModel[size.Rows * size.Columns];
         var userMove = InitializeCells(size);
 
-        if (aiPlayer.Symbol is Symbol.X)
+        if (aiPlayer is Symbol.X)
         {
-            _xPlayer = aiPlayer.AsXPlayer();
-            _oPlayer = new HumanPlayer(Symbol.O, userMove).AsOPlayer();
+            _xPlayer = strategy.AsXPlayer();
+            _oPlayer = new HumanStrategy(userMove).AsOPlayer();
         }
         else
         {
-            _xPlayer = new HumanPlayer(Symbol.X, userMove).AsXPlayer();
-            _oPlayer = aiPlayer.AsOPlayer();
+            _xPlayer = new HumanStrategy(userMove).AsXPlayer();
+            _oPlayer = strategy.AsOPlayer();
         }
 
         _gameCleanup = CreateNewGame();
         _fullCleanup = new CompositeDisposable
         {
             Disposable.Create(() => _gameCleanup?.Dispose()),
-            aiPlayer as IDisposable ?? Disposable.Empty
+            strategy as IDisposable ?? Disposable.Empty
         };
     }
 

@@ -1,17 +1,18 @@
 ﻿using FluentAssertions;
+using TicTacToe.Interfaces;
 using TicTacToe.Models;
 using TicTacToe.Models.AI;
 
 namespace TicTacToe.Core.Tests;
 
-public class MinimaxPlayerTests
+public class MinimaxStrategyTests
 {
     private static readonly Symbol? _ = null;
 
     [Fact]
     public async Task Opening_PlayerMovesToCenter()
     {
-        var player = new MinimaxPlayer(X);
+        IPlayer player = new MinimaxStrategy().AsXPlayer();
         var field = new Field(new[,]
         {
             { _, _, _ },
@@ -23,7 +24,7 @@ public class MinimaxPlayerTests
         move.Should()
             .Be(new Move(new Cell(1, 1), X));
 
-        player = new MinimaxPlayer(O);
+        player = new MinimaxStrategy().AsOPlayer();
         field = new Field(new[,]
         {
             { _, _, _ },
@@ -39,7 +40,7 @@ public class MinimaxPlayerTests
     [Fact]
     public async Task OneMoveToWin_PlayerDoThatMove()
     {
-        var player = new MinimaxPlayer(X);
+        IPlayer player = new MinimaxStrategy().AsXPlayer();
         var field = new Field(new[,]
         {
             { O, _, X }, 
@@ -69,7 +70,7 @@ public class MinimaxPlayerTests
             { X, X, _ } // <- [2, 2]
         });
 
-        player = new MinimaxPlayer(O);
+        player = new MinimaxStrategy().AsOPlayer();
         move = await player.GetNextMove(field);
         move.Should()
             .Be(new Move(new Cell(2, 2), O));
@@ -78,7 +79,7 @@ public class MinimaxPlayerTests
     [Fact]
     public async Task OneMoveToFork_PlayerDoThatMove()
     {
-        var player = new MinimaxPlayer(X);
+        IPlayer player = new MinimaxStrategy().AsXPlayer();
         var field = new Field(new[,]
         {
             { X, O, _ }, 
@@ -94,7 +95,7 @@ public class MinimaxPlayerTests
     [Fact]
     public async Task OneMoveToLose_PlayerBreaksTheOpponentsLine()
     {
-        var player = new MinimaxPlayer(X);
+        IPlayer player = new MinimaxStrategy().AsXPlayer();
         var field = new Field(new[,]
         {
             { X, _, _ }, // <- [0, 2]
@@ -106,7 +107,7 @@ public class MinimaxPlayerTests
         move.Should()
             .Be(new Move(new Cell(0, 2), X));
 
-        player = new MinimaxPlayer(O);
+        player = new MinimaxStrategy().AsOPlayer();
         field = new Field(new[,]
         {
             { _, O, _ },
@@ -122,7 +123,7 @@ public class MinimaxPlayerTests
     [Fact]
     public async Task AnyMoveToLoose()
     {
-        var player = new MinimaxPlayer(O);
+        IPlayer player = new MinimaxStrategy().AsOPlayer();
         var field = new Field(new[,]
         {
             { X, O, _ }, 
@@ -149,7 +150,7 @@ public class MinimaxPlayerTests
     [Fact]
     public async Task ExampleFromTheArticle_PlayerBreaksTheOpponentsLine()
     {
-        var player = new MinimaxPlayer(O);
+        IPlayer player = new MinimaxStrategy().AsOPlayer();
         var field = new Field(new[,]
         {
             { _, X, _ }, 
@@ -160,8 +161,7 @@ public class MinimaxPlayerTests
         var move = await player.GetNextMove(field);
         move.Should()
             .Be(new Move(new Cell(0, 2), O));
-        
-        player = new MinimaxPlayer(O);
+
         field = new Field(new[,]
         {
             { X, O, O }, 

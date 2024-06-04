@@ -7,7 +7,7 @@ using TicTacToe.Models;
 
 namespace TicTacToe.ChatGPT;
 
-public class ChatGPTPlayer : IPlayer, IDisposable
+public class ChatGptStrategy : IAIStrategy, IDisposable
 {
     private const string PromptTemplate = """
                                           You are an AI playing a game of Tic Tac Toe as the {1} player.
@@ -28,9 +28,8 @@ public class ChatGPTPlayer : IPlayer, IDisposable
 
     private readonly OpenAiClient _client;
 
-    public ChatGPTPlayer(Symbol symbol, IConfiguration configuration)
+    public ChatGptStrategy(IConfiguration configuration)
     {
-        Symbol = symbol;
         string apiKey = configuration[$"{ChatGPTSettings.Key}:ApiKey"];
         if (apiKey is null)
             throw new ArgumentNullException(nameof(apiKey));
@@ -38,15 +37,13 @@ public class ChatGPTPlayer : IPlayer, IDisposable
         _client = new OpenAiClient(apiKey);
     }
 
-    public Symbol Symbol { get; }
-
-    public async ValueTask<Move> GetNextMove(Field field, CancellationToken cancellationToken = default)
+    public async ValueTask<Move> GetNextMove(Field field, Symbol symbol, CancellationToken cancellationToken = default)
     {
-        string prompt = string.Format(PromptTemplate, field, Symbol);
+        string prompt = string.Format(PromptTemplate, field, symbol);
         var dialog = Dialog.StartAsSystem(prompt);
         var cell = await _client.GetStructuredResponse<Cell>(dialog, model: ChatCompletionModels.Gpt3_5_Turbo, cancellationToken: cancellationToken);
 
-        return new Move(cell, Symbol);
+        return new Move(cell, symbol);
     }
 
     public void Dispose() => _client.Dispose();

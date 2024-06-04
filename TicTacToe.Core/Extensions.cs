@@ -42,7 +42,7 @@ public static class Extensions
 
     public static Symbol Reverse(this Symbol symbol) => symbol is Symbol.X ? Symbol.O : Symbol.X;
 
-    public static XPlayer AsXPlayer(this IPlayer player) => new XPlayer(player);
+    public static XPlayer AsXPlayer(this IStrategy strategy) => new(strategy);
 
-    public static OPlayer AsOPlayer(this IPlayer player) => new OPlayer(player);
+    public static OPlayer AsOPlayer(this IStrategy strategy) => new(strategy);
 }
