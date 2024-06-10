@@ -27,9 +27,9 @@ public class Field : Renderable
         }
         
         var pixel = new string(' ', PixelWidth);
-        for (var y = 0; y < Size.Height * (CellSize + 1) - 1; y++)
+        for (var y = 1; y < Size.Height * (CellSize + 1); y++)
         {
-            for (var x = 0; x < Size.Width * (CellSize + 1) - 1; x++)
+            for (var x = 1; x < Size.Width * (CellSize + 1); x++)
             {
                 var color = GetColor(x, y);
                 yield return new Segment(pixel, new Style(background: color));
@@ -41,7 +41,7 @@ public class Field : Renderable
 
     private Color GetColor(int x, int y)
     {
-        if ((x + 1) % (CellSize + 1) == 0 || (y + 1) % (CellSize + 1) == 0)
+        if (x % (CellSize + 1) == 0 || y % (CellSize + 1) == 0)
             return BorderColor;
 
         return Background;
