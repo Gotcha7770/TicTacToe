@@ -43,8 +43,8 @@ public class MinimaxStrategyTests
         IPlayer player = new MinimaxStrategy().AsXPlayer();
         var field = new Field(new[,]
         {
-            { O, _, X }, 
-            { X, _, _ }, 
+            { O, _, X },
+            { X, _, _ }, // <- [1, 1]
             { X, O, O }
         });
 
@@ -62,11 +62,11 @@ public class MinimaxStrategyTests
         move = await player.GetNextMove(field);
         move.Should()
             .Be(new Move(new Cell(1, 2), X));
-        
+
         field = new Field(new[,]
         {
             { O, X, O },
-            { X, O, _ }, 
+            { X, O, _ },
             { X, X, _ } // <- [2, 2]
         });
 
@@ -82,8 +82,8 @@ public class MinimaxStrategyTests
         IPlayer player = new MinimaxStrategy().AsXPlayer();
         var field = new Field(new[,]
         {
-            { X, O, _ }, 
-            { _, X, _ }, 
+            { X, O, _ },
+            { _, X, _ },
             { _, _, O } // <- [2, 0]
         });
 
@@ -126,7 +126,7 @@ public class MinimaxStrategyTests
         IPlayer player = new MinimaxStrategy().AsOPlayer();
         var field = new Field(new[,]
         {
-            { X, O, _ }, 
+            { X, O, _ },
             { X, X, _ },
             { _, _, O }
         });
@@ -138,7 +138,7 @@ public class MinimaxStrategyTests
         field = new Field(new[,]
         {
             { X, O, _ },
-            { _, X, _ }, 
+            { _, X, _ },
             { X, _, O }
         });
 
@@ -153,8 +153,8 @@ public class MinimaxStrategyTests
         IPlayer player = new MinimaxStrategy().AsOPlayer();
         var field = new Field(new[,]
         {
-            { _, X, _ }, 
-            { _, _, X }, 
+            { _, X, _ },
+            { _, _, X },
             { O, O, X }
         });
 
@@ -164,8 +164,8 @@ public class MinimaxStrategyTests
 
         field = new Field(new[,]
         {
-            { X, O, O }, 
-            { X, _, _ }, 
+            { X, O, O },
+            { X, _, _ },
             { _, X, _ }
         });
 

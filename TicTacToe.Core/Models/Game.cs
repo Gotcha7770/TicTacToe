@@ -31,7 +31,7 @@ public class Game
     public IPlayer CurrentPlayer { get; private set; }
     public GameState State { get; private set; }
 
-    public async Task<bool> NextMove(CancellationToken cancellationToken)
+    public async Task<bool> NextMove(CancellationToken cancellationToken = default)
     {
         if (State is GameState.InProgress)
         {

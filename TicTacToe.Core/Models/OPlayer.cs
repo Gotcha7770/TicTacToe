@@ -13,7 +13,7 @@ public class OPlayer : IPlayer
 
     public Symbol Symbol => Symbol.O;
 
-    public ValueTask<Move> GetNextMove(Field field, CancellationToken cancellationToken = default)
+    public Task<Move> GetNextMove(Field field, CancellationToken cancellationToken = default)
     {
         return _strategy.GetNextMove(field, Symbol, cancellationToken);
     }

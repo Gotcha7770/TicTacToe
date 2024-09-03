@@ -9,11 +9,11 @@ public class GameTests
     [Fact]
     public async Task TwoSimplePlayers()
     {
-        var x = SimpleAiStrategy.FromX();
-        var o = SimpleAiStrategy.FromO();
-        var game = new Game(x, o);
+        var xPlayer = new SimpleAiStrategy().AsXPlayer();
+        var oPlayer = new SimpleAiStrategy().AsOPlayer();
+        var game = new Game(xPlayer, oPlayer);
 
-        while (await game.NextMove(CancellationToken.None)) { }
+        while (await game.NextMove()) { }
 
         game.State.Should()
             .BeOneOf(GameState.Draw, GameState.GameOver);

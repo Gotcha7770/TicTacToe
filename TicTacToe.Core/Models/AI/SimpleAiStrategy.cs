@@ -7,7 +7,7 @@ public class SimpleAiStrategy : IAIStrategy
     private static readonly Random Random = new();
     public static TimeSpan Timeout { get; set; } = TimeSpan.Zero;
 
-    public async ValueTask<Move> GetNextMove(Field field, Symbol symbol, CancellationToken cancellationToken = default)
+    public async Task<Move> GetNextMove(Field field, Symbol symbol, CancellationToken cancellationToken = default)
     {
         await Task.Delay(Timeout, cancellationToken);
         var variants = field.GetEmptyCells().ToArray();
@@ -16,8 +16,4 @@ public class SimpleAiStrategy : IAIStrategy
 
         return new Move(randomCell, symbol);
     }
-
-    public static XPlayer FromX() => new(new SimpleAiStrategy());
-
-    public static OPlayer FromO() => new OPlayer(new SimpleAiStrategy());
 }

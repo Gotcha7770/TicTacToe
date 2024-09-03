@@ -12,8 +12,8 @@ public class HumanStrategy : IStrategy
         _moves = moves;
     }
 
-    public ValueTask<Move> GetNextMove(Field field, Symbol symbol, CancellationToken cancellationToken)
+    public Task<Move> GetNextMove(Field field, Symbol symbol, CancellationToken cancellationToken)
     {
-        return _moves.Where(x => x.Symbol == symbol).NextAsync(cancellationToken);
+        return _moves.Where(x => x.Symbol == symbol).NextAsync(cancellationToken).AsTask();
     }
 }

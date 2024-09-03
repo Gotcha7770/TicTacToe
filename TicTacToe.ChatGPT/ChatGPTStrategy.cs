@@ -37,7 +37,7 @@ public class ChatGptStrategy : IAIStrategy, IDisposable
         _client = new OpenAiClient(apiKey);
     }
 
-    public async ValueTask<Move> GetNextMove(Field field, Symbol symbol, CancellationToken cancellationToken = default)
+    public async Task<Move> GetNextMove(Field field, Symbol symbol, CancellationToken cancellationToken = default)
     {
         string prompt = string.Format(PromptTemplate, field, symbol);
         var dialog = Dialog.StartAsSystem(prompt);

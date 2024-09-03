@@ -28,9 +28,6 @@ interface IPlayer {
     Move(field)
 }
 
-abstract class Player {
-}
-
 class OPlayer {
 }
 
@@ -52,11 +49,11 @@ Move --> Symbol
 Move --> Cell
 Field o-- Symbol
 Field ..> Move
-Player ..|> IPlayer
-XPlayer ..|> Player
-OPlayer ..|> Player
+XPlayer ..|> IPlayer
+OPlayer ..|> IPlayer
 IPlayer --> Move
 Game ..> Field
-Game --> IPlayer
+Game --> XPlayer
+Game --> OPlayer
 
 @enduml

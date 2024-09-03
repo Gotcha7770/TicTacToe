@@ -8,7 +8,7 @@ public class MinimaxStrategy : IAIStrategy
 {
     public static TimeSpan Timeout { get; set; } = TimeSpan.Zero;
 
-    public async ValueTask<Move> GetNextMove(Field field, Symbol symbol, CancellationToken cancellationToken = default)
+    public async Task<Move> GetNextMove(Field field, Symbol symbol, CancellationToken cancellationToken = default)
     {
         await Task.Delay(Timeout, cancellationToken);
         var bestScore = int.MinValue;
@@ -27,12 +27,9 @@ public class MinimaxStrategy : IAIStrategy
         return bestMove;
     }
     
-    private int GetScore(Symbol symbol, Symbol winner, int depth) => winner == symbol ? 10 - depth : depth - 10;
-    
     private int Minimax(Field field, Symbol symbol, Symbol currentPlayer, byte depth = 0)
     {
-        var maybe = field.GetWinner();
-        if (maybe is { } winner)
+        if (field.GetWinner() is { } winner)
             return winner == currentPlayer ? 10 - depth : depth - 10;
     
         if (Game.IsDraw(field))
