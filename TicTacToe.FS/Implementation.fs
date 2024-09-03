@@ -5,7 +5,7 @@ open TicTacToe.FS.Domain
 /// the list of all horizontal positions
 let allHorizontalPositions = [Left; HorizontalPosition.Center; Right]
 
-/// the list of all horizontal positions
+/// the list of all vertical positions
 let allVerticalPositions = [Top; VerticalPosition.Middle; Bottom]
 
 /// the list of all positions on board
@@ -50,8 +50,8 @@ let linesToCheck =
     [
         yield! horizontalLines
         yield! verticalLines
-        yield Line [Left,Top; HorizontalPosition.Center,VerticalPosition.Middle; Right,Bottom]
-        yield Line [Left,Bottom; HorizontalPosition.Center,VerticalPosition.Middle; Right,Top]
+        yield Line [Left,Top; Center,Middle; Right,Bottom]
+        yield Line [Left,Bottom; Center,Middle; Right,Top]
     ]
 
 /// get the DisplayInfo from the gameState

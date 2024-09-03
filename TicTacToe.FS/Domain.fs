@@ -1,5 +1,7 @@
 ﻿module TicTacToe.FS.Domain
 
+// https://fsharpforfunandprofit.com/posts/enterprise-tic-tac-toe-2/
+
 type HorizontalPosition = Left | Center | Right
 type VerticalPosition = Top | Middle | Bottom
 type CellPosition = HorizontalPosition * VerticalPosition
