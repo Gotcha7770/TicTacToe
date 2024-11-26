@@ -1,13 +1,13 @@
 using System;
 using System.Reactive.Disposables;
-using Avalonia.Controls;
+using Avalonia.ReactiveUI;
 using ReactiveUI;
 using TicTacToe.Avalonia.ViewModels;
 using TicTacToe.Models;
 
 namespace TicTacToe.Avalonia.Views;
 
-public partial class MainView : UserControl, IViewFor<MainViewModel>
+public partial class MainView : ReactiveUserControl<MainViewModel>
 {
     public MainView()
     {
@@ -36,12 +36,4 @@ public partial class MainView : UserControl, IViewFor<MainViewModel>
     {
         ViewModel = DataContext as MainViewModel;
     }
-
-    object IViewFor.ViewModel
-    {
-        get => ViewModel;
-        set => ViewModel = value as MainViewModel;
-    }
-
-    public MainViewModel ViewModel { get; set; }
 }
