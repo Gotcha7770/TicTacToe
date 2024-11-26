@@ -18,8 +18,8 @@
                     <ItemsControl ItemsSource="{TemplateBinding Cells}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <UniformGrid Rows="{Binding Size.Rows, RelativeSource={RelativeSource TemplatedParent}}"
-                                             Columns="{Binding Size.Columns, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                <UniformGrid Rows="{Binding Size.Rows, RelativeSource={RelativeSource AncestorType=controls:GameBoard}}"
+                                             Columns="{Binding Size.Columns, RelativeSource={RelativeSource AncestorType=controls:GameBoard}}"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
