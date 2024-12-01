@@ -68,7 +68,8 @@ public class MainViewModel : ReactiveObject
             //GameMode.Medium => new GameViewModel(CreateOPlayer(mode), new BoardSize(3, 3)),
             GameMode.Hard => new GameViewModel(new MinimaxStrategy(), selectedPlayer.Reverse(), new BoardSize(3, 3)),
             GameMode.ChatGPT => new GameViewModel(new ChatGptStrategy(_configuration), selectedPlayer.Reverse(), new BoardSize(3, 3)),
-            GameMode.HotSeat => new GameViewModel(new BoardSize(3, 3))
+            GameMode.HotSeat => new GameViewModel(new BoardSize(3, 3)),
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
         };
     }
 }
