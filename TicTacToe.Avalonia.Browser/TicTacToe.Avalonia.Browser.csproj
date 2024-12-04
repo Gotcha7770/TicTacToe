@@ -3,9 +3,11 @@
         <TargetFramework>net9.0</TargetFramework>
         <RuntimeIdentifier>browser-wasm</RuntimeIdentifier>
         <WasmMainJSPath>AppBundle\main.js</WasmMainJSPath>
+        <PublishTrimmed>false</PublishTrimmed>
         <OutputType>Exe</OutputType>
         <Nullable>disable</Nullable>
         <LangVersion>latestmajor</LangVersion>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,10 +15,17 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Avalonia" Version="11.2.2" />
         <PackageReference Include="Avalonia.Browser" Version="$(AvaloniaVersion)"/>
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\TicTacToe.Avalonia\TicTacToe.Avalonia.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 </Project>

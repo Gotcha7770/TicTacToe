@@ -1,26 +1,38 @@
-﻿FROM mcr.microsoft.com/dotnet/runtime:9.0 AS base
-WORKDIR /app
-EXPOSE 8080
-
+# Указываем базовый образ с поддержкой WebAssembly
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
-COPY ["TicTacToe.Core/TicTacToe.Core.csproj", "TicTacToe.Core/"]
-COPY ["TicTacToe.Core.Tests/TicTacToe.Core.Tests.csproj", "TicTacToe.Core.Tests/"]
-COPY ["TicTacToe.ChatGPT/TicTacToe.ChatGPT.csproj", "TicTacToe.ChatGPT/"]
-COPY ["TicTacToe.Avalonia/TicTacToe.Avalonia.csproj", "TicTacToe.Avalonia/"]
-COPY ["TicTacToe.Avalonia.Browser/TicTacToe.Avalonia.Browser.csproj", "TicTacToe.Avalonia.Browser/"]
-RUN dotnet workload restore
-RUN dotnet restore "TicTacToe.Avalonia.Browser/TicTacToe.Avalonia.Browser.csproj"
-COPY . .
-WORKDIR "/src/TicTacToe.Avalonia.Browser"
-RUN dotnet build "TicTacToe.Avalonia.Browser.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "TicTacToe.Avalonia.Browser.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
-
-FROM base AS final
+# Устанавливаем рабочую директорию для сборки
 WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "TicTacToe.Avalonia.Browser.dll"]
+
+# Устанавливаем необходимые workloads
+RUN dotnet workload install wasm-tools wasi-experimental
+
+# Установка Python
+RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-pip && ln -s /usr/bin/python3 /usr/bin/python
+
+# Копируем проект в контейнер
+COPY . .
+
+# Восстанавливаем зависимости
+RUN dotnet restore "TicTacToe.Avalonia.Browser/TicTacToe.Avalonia.Browser.csproj"
+
+# Собираем проект в Release-режиме
+RUN dotnet publish "TicTacToe.Avalonia.Browser/TicTacToe.Avalonia.Browser.csproj" -c Release -o out /p:WasmEnableThreads=true
+
+# Базовый образ для веб-сервера
+FROM nginx:alpine
+
+# Удаление старого содержимого папки HTML
+RUN rm -rf /usr/share/nginx/html/*
+
+# Копируем собранный проект из предыдущего слоя
+COPY --from=build /app/out /usr/share/nginx/html
+
+# Копируем Nginx конфигурацию
+COPY "TicTacToe.Avalonia.Browser/nginx.conf" /etc/nginx/conf.d/default.conf
+
+# Открываем порт 80
+EXPOSE 80
+
+# Запускаем Nginx
+CMD ["nginx", "-g", "daemon off;"]
