@@ -35,15 +35,13 @@ public class MainViewModel : ReactiveObject
             CreateGame) //TODO: Dispose old game? scoped DI?
             .ToProperty(this, x => x.GameViewModel);
 
-        RestartCommand = ReactiveCommand.Create(Restart);
-        SetPlayerCommand = ReactiveCommand.Create<Symbol>(x => SelectedPlayer = x);
+        RestartCommand = ReactiveCommand.Create(GameViewModel.Restart);
         
         SimpleAiStrategy.Timeout = TimeSpan.FromSeconds(0.2);
         MinimaxStrategy.Timeout = TimeSpan.FromSeconds(0.2);
     }
 
-    public ReactiveCommand<Unit, Unit> RestartCommand { get; set; }
-    public ReactiveCommand<Symbol, Unit> SetPlayerCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> RestartCommand { get; }
     public GameViewModel GameViewModel => _gameViewModel.Value;
 
     public GameMode SelectedGameMode
@@ -57,8 +55,6 @@ public class MainViewModel : ReactiveObject
         get => _selectedPlayer;
         set => this.RaiseAndSetIfChanged(ref _selectedPlayer, value);
     }
-
-    private void Restart() => GameViewModel.Restart();
 
     private GameViewModel CreateGame(GameMode mode, Symbol selectedPlayer)
     {

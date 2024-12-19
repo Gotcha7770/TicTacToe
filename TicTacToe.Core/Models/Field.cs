@@ -110,7 +110,7 @@ public class Field
     {
         for (byte i = 0; i < 3; i++)
         {
-            yield return new[] { _symbols[i, 0], _symbols[i, 1], _symbols[i, 2] };
+            yield return [_symbols[i, 0], _symbols[i, 1], _symbols[i, 2]];
         }
     }
 
@@ -118,18 +118,18 @@ public class Field
     {
         for (byte i = 0; i < 3; i++)
         {
-            yield return new[] { _symbols[0, i], _symbols[1, i], _symbols[2, i] };
+            yield return [_symbols[0, i], _symbols[1, i], _symbols[2, i]];
         }
     }
 
     private IEnumerable<Symbol?> GetLeftDiagonal()
     {
-        return new[] { _symbols[0, 0], _symbols[1, 1], _symbols[2, 2] };
+        return [_symbols[0, 0], _symbols[1, 1], _symbols[2, 2]];
     }
 
     private IEnumerable<Symbol?> GetRightDiagonal()
     {
-        return new[] { _symbols[2, 0], _symbols[1, 1], _symbols[0, 2] };
+        return [_symbols[2, 0], _symbols[1, 1], _symbols[0, 2]];
     }
     
     internal class FieldDebugView

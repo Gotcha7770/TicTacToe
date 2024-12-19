@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using Avalonia.ReactiveUI;
+using Avalonia.ReactiveUI; //TODO: убрать
 using ReactiveUI;
 using TicTacToe.Interfaces;
 using TicTacToe.Models;
@@ -37,6 +37,7 @@ public class GameViewModel : ReactiveObject, IDisposable
         _xPlayer = new HumanStrategy(userMove).AsXPlayer();
         _oPlayer = new HumanStrategy(userMove).AsOPlayer();
 
+        _gameCleanup = CreateNewGame();
         _fullCleanup = new CompositeDisposable
         {
             Disposable.Create(_gameCleanup.Dispose),
