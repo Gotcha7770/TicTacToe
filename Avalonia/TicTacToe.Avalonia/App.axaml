@@ -12,8 +12,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="/Style/Colors.axaml"/>
-                <ResourceInclude Source="Style/Converters.axaml"/>
+                <ResourceInclude Source="Styles/Colors.axaml"/>
+                <ResourceInclude Source="Styles/Converters.axaml"/>
                 <ResourceDictionary>
                     <GeometryGroup x:Key="CrossIcon">
                         <Geometry>M 16 16 L 112 112</Geometry>

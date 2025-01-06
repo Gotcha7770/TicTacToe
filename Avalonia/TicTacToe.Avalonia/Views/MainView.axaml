@@ -10,21 +10,21 @@
     <Design.DataContext>
         <vm:MainViewModel />
     </Design.DataContext>
-    
+
     <UserControl.Resources>
-        <SplineEasing x:Key="GameBoardEasing" 
+        <SplineEasing x:Key="GameBoardEasing"
                       X1="0.4"
                       Y1="0"
                       X2="1"
                       Y2="1">
         </SplineEasing>
-        <SplineEasing x:Key="SymbolEasing" 
+        <SplineEasing x:Key="SymbolEasing"
                       X1="0.5"
                       Y1="0.5"
                       X2="0.5"
                       Y2="1.5">
         </SplineEasing>
-        <SplineEasing x:Key="TextOpacityEasing" 
+        <SplineEasing x:Key="TextOpacityEasing"
                       X1="1"
                       Y1="0"
                       X2="0.8"
@@ -84,7 +84,7 @@
         </Style>
     </UserControl.Styles>
 
-    <Grid Name="Root" 
+    <Grid Name="Root"
           RowDefinitions="Auto, Auto, Auto, Auto, Auto"
           Width="650"
           VerticalAlignment="Center">
@@ -97,7 +97,7 @@
                          Classes="main player"
                          HorizontalAlignment="Right">
                 <Grid ColumnDefinitions="*, *" Margin="24, 3">
-                    <Path Grid.Column="0" 
+                    <Path Grid.Column="0"
                           Width="16"
                           HorizontalAlignment="Left"
                           VerticalAlignment="Center"
@@ -148,48 +148,34 @@
                                     Background="{DynamicResource PrimaryBrush}"
                                     Foreground="{DynamicResource SecondaryBrush}"
                                     Size="{Binding GameViewModel.Size}"
-                                    Cells="{Binding GameViewModel.Cells}">
+                                    Cells="{Binding GameViewModel.Cells}"
+                                    Classes.triggered="{Binding GameViewModel.State, Converter={StaticResource NotEqualsConverter}, ConverterParameter={x:Static models:GameState.InProgress}}">
                     <controls:GameBoard.Styles>
-                        <Style Selector="controls|GameBoard">
-                            <Style.Animations>
-                                <Animation Duration="0:0:0.5" FillMode="Both" Easing="{StaticResource GameBoardEasing}">
-                                    <KeyFrame Cue="0%">
-                                        <Setter Property="Opacity" Value="1" />
-                                        <Setter Property="ScaleTransform.ScaleX" Value="1" />
-                                        <Setter Property="ScaleTransform.ScaleY" Value="1" />
-                                    </KeyFrame>
-                                    <KeyFrame Cue="100%">
-                                        <Setter Property="Opacity" Value="0" />
-                                        <Setter Property="ScaleTransform.ScaleX" Value="0.8" />
-                                        <Setter Property="ScaleTransform.ScaleY" Value="0.8" />
-                                    </KeyFrame>
-                                </Animation>
-                            </Style.Animations>
+                        <Style Selector="controls|GameBoard.triggered">
+                            <Setter Property="Transitions">
+                                <Transitions>
+                                    <DoubleTransition Property="Opacity" Duration="0:0:0.5" Easing="{StaticResource GameBoardEasing}"/>
+                                    <TransformOperationsTransition Property="RenderTransform"  Duration="0:0:0.5" Easing="{StaticResource GameBoardEasing}"/>
+                                </Transitions>
+                            </Setter>
+                            <Setter Property="Opacity" Value="0" />
+                            <Setter Property="RenderTransform" Value="scale(0.8)" />
                         </Style>
                     </controls:GameBoard.Styles>
                 </controls:GameBoard>
                 <Grid RowDefinitions="*, Auto">
                     <Path Grid.Row="0"
-                        Stretch="Fill"
-                        StrokeDashArray="100"
-                        Classes.cross="{Binding GameViewModel.CurrentPlayer.Symbol, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:Symbol.X}}"
-                        Classes.nought="{Binding GameViewModel.CurrentPlayer.Symbol, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:Symbol.O}}">
+                          Stretch="Fill"
+                          StrokeDashArray="100"
+                          Classes.cross="{Binding GameViewModel.CurrentPlayer.Symbol, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:Symbol.X}}"
+                          Classes.nought="{Binding GameViewModel.CurrentPlayer.Symbol, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:Symbol.O}}"
+                          Classes.triggered="{Binding GameViewModel.State, Converter={StaticResource NotEqualsConverter}, ConverterParameter={x:Static models:GameState.InProgress}}">
                         <Path.Styles>
                             <Style Selector="Path">
-                                <Style.Animations>
-                                    <Animation Duration="0:0:0.4" FillMode="Both" Easing="{StaticResource SymbolEasing}">
-                                        <KeyFrame Cue="0%">
-                                            <Setter Property="Width" Value="36" />
-                                            <Setter Property="Height" Value="36" />
-                                            <Setter Property="StrokeThickness" Value="6" />
-                                        </KeyFrame>
-                                        <KeyFrame Cue="100%">
-                                            <Setter Property="Width" Value="96" />
-                                            <Setter Property="Height" Value="96" />
-                                            <Setter Property="StrokeThickness" Value="16" />
-                                        </KeyFrame>
-                                    </Animation>
-                                </Style.Animations>
+                                <Setter Property="IsVisible" Value="False" />
+                                <Setter Property="Width" Value="36" />
+                                <Setter Property="Height" Value="36" />
+                                <Setter Property="StrokeThickness" Value="6" />
                             </Style>
                             <Style Selector="Path.cross">
                                 <Setter Property="Data" Value="{DynamicResource CrossIcon}" />
@@ -199,34 +185,42 @@
                                 <Setter Property="Data" Value="{DynamicResource NoughtIcon}" />
                                 <Setter Property="Stroke" Value="{DynamicResource WhiteColor}" />
                             </Style>
+                            <Style Selector="Path.triggered">
+                                <Setter Property="IsVisible" Value="True" />
+                                <Setter Property="Transitions">
+                                    <Transitions>
+                                        <DoubleTransition Property="Width" Duration="0:0:0.4" Easing="{StaticResource SymbolEasing}"/>
+                                        <DoubleTransition Property="Height" Duration="0:0:0.4" Easing="{StaticResource SymbolEasing}"/>
+                                        <DoubleTransition Property="StrokeThickness" Duration="0:0:0.4" Easing="{StaticResource SymbolEasing}"/>
+                                    </Transitions>
+                                </Setter>
+                                <Setter Property="Width" Value="96" />
+                                <Setter Property="Height" Value="96" />
+                                <Setter Property="StrokeThickness" Value="16" />
+                            </Style>
                         </Path.Styles>
                     </Path>
                     <TextBlock Grid.Row="1"
                                Text="Победитель!"
                                Width="249"
-                               FontSize="34"
+                               FontWeight="Bold"
                                TextAlignment="Center"
-                               Foreground="{DynamicResource DarkGreyColor}">
+                               Foreground="{DynamicResource DarkGreyColor}"
+                               Classes.triggered="{Binding GameViewModel.State, Converter={StaticResource NotEqualsConverter}, ConverterParameter={x:Static models:GameState.InProgress}}">
                         <TextBlock.Styles>
                             <Style Selector="TextBlock">
-                                <Style.Animations>
-                                    <Animation Delay="0.4" Duration="0:0:0.4" FillMode="Both">
-                                        <KeyFrame Cue="0%">
-                                            <Setter Property="FontSize" Value="2" />
-                                        </KeyFrame>
-                                        <KeyFrame Cue="100%">
-                                            <Setter Property="FontSize" Value="34" />
-                                        </KeyFrame>
-                                    </Animation>
-                                    <Animation Delay="0.4" Duration="0:0:0.5" FillMode="Both" Easing="{StaticResource TextOpacityEasing}">
-                                        <KeyFrame Cue="0%">
-                                            <Setter Property="Opacity" Value="0.0" />
-                                        </KeyFrame>
-                                        <KeyFrame Cue="100%">
-                                            <Setter Property="Opacity" Value="1.0" />
-                                        </KeyFrame>
-                                    </Animation>
-                                </Style.Animations>
+                                <Setter Property="FontSize" Value="2" />
+                                <Setter Property="Opacity" Value="0" />
+                            </Style>
+                            <Style Selector="TextBlock.triggered">
+                                <Setter Property="Transitions">
+                                    <Transitions>
+                                        <DoubleTransition Property="FontSize" Delay="0.4" Duration="0:0:0.4"/>
+                                        <DoubleTransition Property="Opacity" Delay="0.3" Duration="0:0:0.4" Easing="{StaticResource TextOpacityEasing}"/>
+                                    </Transitions>
+                                </Setter>
+                                <Setter Property="FontSize" Value="34" />
+                                <Setter Property="Opacity" Value="1" />
                             </Style>
                         </TextBlock.Styles>
                     </TextBlock>
