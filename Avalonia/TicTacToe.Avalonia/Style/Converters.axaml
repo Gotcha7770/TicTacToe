@@ -2,6 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="clr-namespace:TicTacToe.Avalonia.Converters">
     <converters:EqualityConverter x:Key="EqualityConverter" />
-        
     <converters:EqualityConverter x:Key="ReferenceEqualityConverter" IsComparedByReference="True" />
+    <converters:InvertBoolConverter x:Key="InvertBoolConverter" />
+    <converters:CompositeConverter x:Key="NotEqualsConverter">
+        <converters:ConverterContext Converter="{StaticResource EqualityConverter}"/>
+        <converters:ConverterContext Converter="{StaticResource InvertBoolConverter}"/>
+    </converters:CompositeConverter>
 </ResourceDictionary>

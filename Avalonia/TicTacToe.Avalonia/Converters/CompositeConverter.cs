@@ -14,7 +14,14 @@ public class CompositeConverter : List<ConverterContext>, IValueConverter
         if (value == AvaloniaProperty.UnsetValue)
             return value;
 
-        return this.Aggregate(value, (current, context) => context.Converter.Convert(current, targetType, context.Parameter, culture));
+        var result = this.Aggregate((Value: value, Parameter: parameter), (current, context) =>
+        {
+            var newParameter = context.Parameter ?? current.Parameter;
+            var newValue = context.Converter.Convert(current.Value, targetType, newParameter, culture);
+            return (newValue, newParameter);
+        });
+
+        return result.Value;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
