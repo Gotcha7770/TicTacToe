@@ -126,6 +126,7 @@ public class GameViewModel : ReactiveObject, IDisposable
         var game = new Game(_xPlayer, _oPlayer);
         CurrentPlayer = game.CurrentPlayer;
         State = game.State;
+        //State = GameState.Draw;
 
         return game.ToObservable()
             .SubscribeOn(AvaloniaScheduler.Instance)

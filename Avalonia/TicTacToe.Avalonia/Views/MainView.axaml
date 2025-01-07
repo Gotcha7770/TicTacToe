@@ -163,29 +163,84 @@
                         </Style>
                     </controls:GameBoard.Styles>
                 </controls:GameBoard>
-                <Grid RowDefinitions="*, Auto">
+                <Grid
+                    Name="AnimationRoot"
+                    RowDefinitions="*, Auto">
+                    <Grid 
+                        Grid.Row="0"
+                        ColumnDefinitions="Auto, Auto"
+                        HorizontalAlignment="Center"
+                        Classes.draw="{Binding GameViewModel.State, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:GameState.Draw}}">
+                        <Path 
+                            Grid.Column="0"
+                            Margin="12"
+                            Classes="cross"
+                            Classes.draw="{Binding GameViewModel.State, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:GameState.Draw}}">
+                            <Path.Styles>
+                                <Style Selector="Path">
+                                    <Setter Property="Width" Value="36" />
+                                    <Setter Property="Height" Value="36" />
+                                </Style>
+                                <Style Selector="Path.draw">
+                                    <Setter Property="IsVisible" Value="True" />
+                                    <Setter Property="Transitions">
+                                        <Transitions>
+                                            <DoubleTransition Property="Width" Duration="0:0:0.4" Easing="{StaticResource SymbolEasing}"/>
+                                            <DoubleTransition Property="Height" Duration="0:0:0.4" Easing="{StaticResource SymbolEasing}"/>
+                                            <DoubleTransition Property="StrokeThickness" Duration="0:0:0.4" Easing="{StaticResource SymbolEasing}"/>
+                                        </Transitions>
+                                    </Setter>
+                                    <Setter Property="Width" Value="72" />
+                                    <Setter Property="Height" Value="72" />
+                                    <Setter Property="StrokeThickness" Value="12" />
+                                </Style>
+                            </Path.Styles>
+                        </Path>
+                        <Path 
+                            Grid.Column="1"
+                            Margin="12"
+                            Classes="nought"
+                            Classes.draw="{Binding GameViewModel.State, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:GameState.Draw}}">
+                            <Path.Styles>
+                                <Style Selector="Path">
+                                    <Setter Property="Width" Value="36" />
+                                    <Setter Property="Height" Value="36" />
+                                </Style>
+                                <Style Selector="Path.draw">
+                                    <Setter Property="IsVisible" Value="True" />
+                                    <Setter Property="Transitions">
+                                        <Transitions>
+                                            <DoubleTransition Property="Width" Duration="0:0:0.4" Easing="{StaticResource SymbolEasing}"/>
+                                            <DoubleTransition Property="Height" Duration="0:0:0.4" Easing="{StaticResource SymbolEasing}"/>
+                                            <DoubleTransition Property="StrokeThickness" Duration="0:0:0.4" Easing="{StaticResource SymbolEasing}"/>
+                                        </Transitions>
+                                    </Setter>
+                                    <Setter Property="Width" Value="72" />
+                                    <Setter Property="Height" Value="72" />
+                                    <Setter Property="StrokeThickness" Value="12" />
+                                </Style>
+                            </Path.Styles>
+                        </Path>
+                        <Grid.Styles>
+                            <Style Selector="Grid">
+                                <Setter Property="IsVisible" Value="False" />
+                            </Style>
+                            <Style Selector="Grid.draw">
+                                <Setter Property="IsVisible" Value="True" />
+                            </Style>
+                        </Grid.Styles>
+                    </Grid>
                     <Path Grid.Row="0"
-                          Stretch="Fill"
-                          StrokeDashArray="100"
                           Classes.cross="{Binding GameViewModel.CurrentPlayer.Symbol, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:Symbol.X}}"
                           Classes.nought="{Binding GameViewModel.CurrentPlayer.Symbol, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:Symbol.O}}"
-                          Classes.triggered="{Binding GameViewModel.State, Converter={StaticResource NotEqualsConverter}, ConverterParameter={x:Static models:GameState.InProgress}}">
+                          Classes.gameOver="{Binding GameViewModel.State, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:GameState.GameOver}}">
                         <Path.Styles>
                             <Style Selector="Path">
                                 <Setter Property="IsVisible" Value="False" />
                                 <Setter Property="Width" Value="36" />
                                 <Setter Property="Height" Value="36" />
-                                <Setter Property="StrokeThickness" Value="6" />
                             </Style>
-                            <Style Selector="Path.cross">
-                                <Setter Property="Data" Value="{DynamicResource CrossIcon}" />
-                                <Setter Property="Stroke" Value="{DynamicResource DarkGreyColor}" />
-                            </Style>
-                            <Style Selector="Path.nought">
-                                <Setter Property="Data" Value="{DynamicResource NoughtIcon}" />
-                                <Setter Property="Stroke" Value="{DynamicResource WhiteColor}" />
-                            </Style>
-                            <Style Selector="Path.triggered">
+                            <Style Selector="Path.gameOver">
                                 <Setter Property="IsVisible" Value="True" />
                                 <Setter Property="Transitions">
                                     <Transitions>
@@ -201,12 +256,13 @@
                         </Path.Styles>
                     </Path>
                     <TextBlock Grid.Row="1"
-                               Text="Победитель!"
                                Width="249"
                                FontWeight="Bold"
                                TextAlignment="Center"
                                Foreground="{DynamicResource DarkGreyColor}"
-                               Classes.triggered="{Binding GameViewModel.State, Converter={StaticResource NotEqualsConverter}, ConverterParameter={x:Static models:GameState.InProgress}}">
+                               Classes.triggered="{Binding GameViewModel.State, Converter={StaticResource NotEqualsConverter}, ConverterParameter={x:Static models:GameState.InProgress}}"
+                               Classes.draw="{Binding GameViewModel.State, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:GameState.Draw}}"
+                               Classes.gameOver="{Binding GameViewModel.State, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:GameState.GameOver}}">
                         <TextBlock.Styles>
                             <Style Selector="TextBlock">
                                 <Setter Property="FontSize" Value="2" />
@@ -221,6 +277,12 @@
                                 </Setter>
                                 <Setter Property="FontSize" Value="34" />
                                 <Setter Property="Opacity" Value="1" />
+                            </Style>
+                            <Style Selector="TextBlock.draw">
+                                <Setter Property="Text" Value="Ничья!"/>
+                            </Style>
+                            <Style Selector="TextBlock.gameOver">
+                                <Setter Property="Text" Value="Победитель!"/>
                             </Style>
                         </TextBlock.Styles>
                     </TextBlock>

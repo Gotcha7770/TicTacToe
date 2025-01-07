@@ -5,8 +5,9 @@
 
     <Application.Styles>
         <FluentTheme />
-        <StyleInclude Source="Controls/GameBoard.axaml"></StyleInclude>
-        <StyleInclude Source="Controls/Cell.axaml"></StyleInclude>
+        <StyleInclude Source="Styles/TicTacToeStyles.axaml"/>
+        <StyleInclude Source="Controls/GameBoard.axaml"/>
+        <StyleInclude Source="Controls/Cell.axaml"/>
     </Application.Styles>
 
     <Application.Resources>

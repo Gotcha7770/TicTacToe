@@ -28,15 +28,11 @@
                                                Background="{Binding Background, RelativeSource={RelativeSource AncestorType=controls:GameBoard}}"
                                                Command="{Binding PressedCommand}">
                                     <controls:Cell.Content>
-                                        <Path StrokeThickness="6"
-                                              Stretch="UniformToFill"
+                                        <Path Stretch="UniformToFill"
                                               Classes.cross="{Binding Symbol, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:Symbol.X}}"
                                               Classes.nought="{Binding Symbol, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:Symbol.O}}">
                                             <Path.Styles>
                                                 <Style Selector="Path.cross">
-                                                    <Setter Property="Data" Value="{DynamicResource CrossIcon}" />
-                                                    <Setter Property="Stroke" Value="{DynamicResource DarkGreyColor}" />
-                                                    <Setter Property="StrokeDashArray" Value="100"/>
                                                     <Style.Animations>
                                                         <Animation Duration="0:0:0.5" Easing="QuarticEaseIn">
                                                             <KeyFrame Cue="0%">
@@ -49,9 +45,6 @@
                                                     </Style.Animations>
                                                 </Style>
                                                 <Style Selector="Path.nought">
-                                                    <Setter Property="Data" Value="{DynamicResource NoughtIcon}" />
-                                                    <Setter Property="Stroke" Value="{DynamicResource WhiteColor}" />
-                                                    <Setter Property="StrokeDashArray" Value="100"/>
                                                     <Style.Animations>
                                                         <Animation Duration="0:0:0.5" Easing="QuarticEaseIn">
                                                             <KeyFrame Cue="0%">
